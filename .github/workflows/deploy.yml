@@ -22,4 +22,4 @@ jobs:
         
         local-dir: ./TrackSida/ 
         
-        server-dir: /home/rdqicar/tracksida/
+        server-dir: /tracksida/
