@@ -53,5 +53,7 @@ function addPartenaire($id_u,$surnom,$email=null,$phone=null,$notes=null){
 
 addPartenaire("1","Melvin","mel@email.com",null,"homme de ma vie");
 
+echo("success")
+
 
 ?>
