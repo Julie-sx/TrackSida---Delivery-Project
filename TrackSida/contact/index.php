@@ -9,10 +9,7 @@
   <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
-
-<main>
-
-  <?php
+<?php
   require('../module/header.php');
 ?>
 
@@ -24,7 +21,8 @@
     </button>
     <span class="subheader-title">Ajouter des contacts</span>
   </div>
-
+  
+<main>
   <div class="contacts-card">
     <div class="card-top">
       <div class="total-badge">
