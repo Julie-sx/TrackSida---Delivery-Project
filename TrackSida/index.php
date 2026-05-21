@@ -17,9 +17,22 @@
   <main>
 
     <!-- Page title -->
-    <button onclick="window.location.href='/alerte'" class="page-title-wrap">
-      <h1 class="page-title">Sid'Alert</h1>
-    </button>
+    <button onclick="window.location.href='/alerte'" class="hero-alert">
+
+    <div class="hero-alert-content">
+      <span class="hero-badge">🚨 Alerte</span>
+
+      <h1 class="hero-title">Sid'Alert</h1>
+
+      <p class="hero-desc">
+        Préviens rapidement tes partenaires et accède aux outils essentiels.
+      </p>
+    </div>
+
+    <div class="hero-arrow">
+      →
+    </div>
+  </button>
 
     <br>
 
