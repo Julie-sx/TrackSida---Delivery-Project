@@ -12,6 +12,7 @@
 <?php
   require('./module/header.php');
 ?>
+
   <!-- MAIN -->
   <main>
 
@@ -30,7 +31,7 @@
       </div>
       <p class="block-desc">Trouve un centre de dépistage proche de chez toi !</p>
           <div class="block-cta">
-        <button class="btn-action">Carte</button>
+        <button onclick="window.location.href='/map'" class="btn-action">Carte</button>
       </div>
     </div>
 
@@ -42,7 +43,7 @@
       </div>
       <p class="block-desc">Consulte et référence tes partenaires</p>
       <div class="block-cta">
-        <button class="btn-action">Ajouter</button>
+        <button onclick="window.location.href='/contact'" class="btn-action">Ajouter</button>
       </div>
     </div>
 
@@ -54,7 +55,7 @@
       </div>
       <p class="block-desc">En savoir plus sur les IST</p>
       <div class="block-cta">
-        <button class="btn-action">Explorer</button>
+        <button onclick="window.location.href='/blog'" class="btn-action">Explorer</button>
       </div>
     </div>
 
