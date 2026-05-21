@@ -13,7 +13,7 @@
 <div class="app">
 
   <?php
-  require('./module/header.php');
+  require('../module/header.php');
 ?>
 
   <!-- ══ SUB-HEADER (global style.css) ══ -->
@@ -45,7 +45,7 @@
   <!-- ══ FOOTER (global style.css) ══ -->
   <!-- FOOTER -->
   <?php
-  require('./module/footer.php');
+  require('../module/footer.php');
   ?>
 
 </div><!-- /.app -->

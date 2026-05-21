@@ -21,6 +21,10 @@
     </button>
   </header>
 
+  <?php
+  require('../module/header.php');
+?>
+
   <!-- SUB-HEADER -->
   <div class="subheader">
     <button class="back-btn" aria-label="Retour">

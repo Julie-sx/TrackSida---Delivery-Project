@@ -11,10 +11,9 @@
 
 <main>
 
-  <div class="page-header">
-    <button class="back-btn" aria-label="Retour">←</button>
-    <span class="page-title">Contact</span>
-  </div>
+  <?php
+  require('../module/header.php');
+?>
 
   <div class="contacts-card">
     <div class="card-top">
