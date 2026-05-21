@@ -20,8 +20,6 @@
     <button onclick="window.location.href='/alerte'" class="hero-alert">
 
     <div class="hero-alert-content">
-      <span class="hero-badge">🚨 Alerte</span>
-
       <h1 class="hero-title">Sid'Alert</h1>
 
       <p class="hero-desc">
