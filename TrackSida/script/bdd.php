@@ -1,9 +1,9 @@
 <?php
 // Connexion Infos
-$host    = 'localhost';
-$db      = 'nom_bdd';
-$user    = 'utilisateur';
-$pass    = 'mdp';
+$host    = 'rdqicartracksida.mysql.db';
+$db      = 'rdqicartracksida';
+$user    = 'rdqicartracksida';
+$pass    = 'Trk789456123';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
