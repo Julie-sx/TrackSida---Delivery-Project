@@ -2,6 +2,21 @@
    TRACKSIDA – contacts.js
 ═══════════════════════════════════════════════ */
 
+const params = new URLSearchParams(window.location.search);
+
+if (params.get('add') === '1') {
+  $('formTitle').textContent = 'Contact';
+  $('submitForm').textContent = 'Ajouter';
+  $('editId').value = '';
+  $('fNom').value = '';
+  $('fPrenom').value = '';
+  $('fEmail').value = '';
+  $('fTel').value = '';
+
+  clearErrors();
+  openOverlay('formOverlay');
+}
+
 /* ── DATA ─────────────────────────────────────── */
 let contacts = [
   { id: 1,  nom: 'S.',  prenom: 'Alex',    email: 'alex.s@mail.com',      tel: '' },

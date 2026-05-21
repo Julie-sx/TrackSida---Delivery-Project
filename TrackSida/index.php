@@ -17,7 +17,7 @@
   <main>
 
     <!-- Page title -->
-    <button class="page-title-wrap">
+    <button onclick="window.location.href='/alerte'" class="page-title-wrap">
       <h1 class="page-title">Sid'Alert</h1>
     </button>
 
