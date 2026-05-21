@@ -89,6 +89,10 @@
   </div>
 </div>
 
+<?php
+  require('../module/footer.php');
+  ?>
+
 <div class="toast" id="toast"></div>
 
 <script src="contacts.js"></script>
