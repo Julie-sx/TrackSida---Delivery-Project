@@ -1,4 +1,8 @@
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+.hero-alert {
+  background: red !important;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --purple:    #7B7FD4;
