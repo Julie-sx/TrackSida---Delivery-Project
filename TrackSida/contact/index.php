@@ -105,6 +105,6 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="contacts.js"></script>
+<script src="../js/contacts.js"></script>
 </body>
 </html>
