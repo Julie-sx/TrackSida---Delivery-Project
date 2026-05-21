@@ -101,7 +101,7 @@
         <button class="result-btn positif" id="btnPositif">Positif</button>
         <button class="result-btn negatif" id="btnNegatif">Négatif</button>
       </div>
-      <div class="find-center">Trouver un centre de dépistage</div>
+      <div onclick="window.location.href='/'" class="find-center">Trouver un centre de dépistage</div>
     </div>
   </div>
 </div>
