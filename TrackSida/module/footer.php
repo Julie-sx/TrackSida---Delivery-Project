@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="../css/menu.css">
+
 <!-- FOOTER -->
 <footer>
     <button class="footer-btn active" id="menuToggle" aria-label="Menu">
@@ -53,7 +55,7 @@
             👤 Profil
         </button>
 
-        <button onclick="window.location.href='/sidalerte'" class="mobile-link">
+        <button onclick="window.location.href='/alerte'" class="mobile-link">
             🚨 Sid'Alerte
         </button>
     </div>
