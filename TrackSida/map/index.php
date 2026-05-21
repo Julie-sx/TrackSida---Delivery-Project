@@ -11,24 +11,22 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   
   <!-- CSS Local -->
-  <link rel="stylesheet" href="map.css" />
+  <link rel="stylesheet" href="../css/map.css" />
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
 <div class="app">
 
-  <!-- HEADER -->
-  <header>
-    <span class="logo">Track SIDA</span>
-    <button class="notif-btn" aria-label="Notifications">
-      <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-      <span class="notif-badge">2</span>
-    </button>
-  </header>
+  <?php
+  require('../module/header.php');
+  ?>
 
   <!-- SUB-HEADER -->
   <div class="subheader">
-    <button class="back-btn" aria-label="Retour" onclick="history.back()">
-      <svg width="16" height="16" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+    <button onclick="window.history.back()" class="back-btn" aria-label="Retour">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
     </button>
     <span class="subheader-title">Cliniques de dépistage</span>
   </div>
@@ -88,33 +86,14 @@
 
   </main>
 
-  <!-- FOOTER -->
-  <footer>
-    <button class="footer-btn">
-      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      Accueil
-    </button>
-    <button class="footer-btn active">
-      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      Cliniques
-    </button>
-    <button class="footer-center">
-      <svg width="26" height="26" fill="none" stroke="#7B7FD4" stroke-width="2.2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-    </button>
-    <button class="footer-btn">
-      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      Résultats
-    </button>
-    <button class="footer-btn">
-      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      Profil
-    </button>
-  </footer>
+  <?php
+  require('../module/footer.php');
+  ?>
 
 </div>
 
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="map.js"></script>
+<script src="../js/map.js"></script>
 </body>
 </html>
