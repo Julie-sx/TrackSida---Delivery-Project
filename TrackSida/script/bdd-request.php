@@ -40,7 +40,7 @@ function addPartenaire($id_u,$surnom,$email=null,$phone=null,$notes=null){
             $rq_param1.=", `telephone`";
             array_push($rq_param2,$phone);
         }
-        if($phone!=null){
+        if($notes!=null){
             $rq_param1.=", `notes`";
             array_push($rq_param2,$notes);
         }
