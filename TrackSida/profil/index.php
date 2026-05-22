@@ -22,18 +22,9 @@
         <polyline points="15 18 9 12 15 6"/>
       </svg>
     </button>
-    <span class="subheader-title">Cliniques de dépistage</span>
-  </div>
-
-  <!-- SUB-HEADER -->
-  <div class="subheader">
-    <button class="back-btn" aria-label="Retour" onclick="history.back()">
-      <svg width="16" height="16" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-    </button>
-    <span class="subheader-title">Mon profil</span>
-    <button class="edit-btn" id="editToggleBtn" aria-label="Modifier le profil" onclick="toggleEdit()">
-      <svg width="16" height="16" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-    </button>
+    <div onclick="toggleEdit()">
+        <span class="subheader-title">Mon profil</span>
+    </div>
   </div>
 
   <!-- MAIN -->
