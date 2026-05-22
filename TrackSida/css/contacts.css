@@ -29,32 +29,6 @@ main {
   padding: 32px 16px 48px;
 }
 
-/* ── PAGE HEADER ── */
-.page-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 22px;
-}
-.back-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--purple-dk);
-  font-size: 1.3rem;
-  transition: transform .2s;
-}
-.back-btn:hover { transform: translateX(-3px); }
-.page-title {
-  background: var(--purple-lt);
-  color: var(--white);
-  font-weight: 800;
-  font-size: .9rem;
-  padding: 6px 18px;
-  border-radius: 20px;
-  letter-spacing: .5px;
-}
-
 /* ── CONTACTS CARD ── */
 .contacts-card {
   background: var(--white);
