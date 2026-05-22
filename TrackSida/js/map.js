@@ -252,7 +252,8 @@ const clinicsData = [
     open: false,
     anonymous: true,
     free: true,
-    type}
+    type:"Planning"
+  }
 ];
 
 let map, markers = [], userMarker = null;
