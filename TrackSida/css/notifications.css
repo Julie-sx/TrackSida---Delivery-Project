@@ -1,0 +1,316 @@
+/* =============================
+   TRACKSIDA — notifications.css
+   ============================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --purple-dark:   #4A47A3;
+  --purple-mid:    #6360C8;
+  --purple-light:  #8A87D8;
+  --purple-bg:     #EEEDF8;
+  --page-bg:       #F0EFF9;
+  --white:         #FFFFFF;
+  --text-primary:  #1A1830;
+  --text-secondary:#5A5880;
+  --text-muted:    #9896B8;
+  --border:        rgba(99, 96, 200, 0.15);
+  --topbar-h:      56px;
+  --bottombar-h:   72px;
+  --radius-card:   18px;
+  --radius-btn:    50px;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background: var(--page-bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  padding-top: var(--topbar-h);
+  padding-bottom: calc(var(--bottombar-h) + 16px);
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--topbar-h);
+  background: var(--purple-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 100;
+}
+
+.topbar__logo {
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+}
+
+.topbar__bell {
+  position: relative;
+  color: #fff;
+  display: flex;
+  align-items: center;
+}
+
+.topbar__badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #E84C6A;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  transition: transform 0.2s;
+}
+
+.topbar__badge[data-count="0"] {
+  display: none;
+}
+
+/* ── PAGE ── */
+.page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px 16px 0;
+}
+
+/* ── HEADER ── */
+.notif-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.notif-header__title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.btn-ghost {
+  background: none;
+  border: none;
+  color: var(--purple-mid);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 0;
+  transition: opacity 0.15s;
+}
+.btn-ghost:hover { opacity: 0.7; }
+
+/* ── FILTRES ── */
+.filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+
+.filter-btn--active,
+.filter-btn:hover {
+  background: var(--purple-dark);
+  border-color: var(--purple-dark);
+  color: #fff;
+}
+
+/* ── LISTE ── */
+.notif-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── CARTE NOTIFICATION ── */
+.notif-card {
+  background: var(--white);
+  border-radius: var(--radius-card);
+  padding: 16px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  border: 1.5px solid var(--border);
+  transition: transform 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+  position: relative;
+}
+
+.notif-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(99, 96, 200, 0.1);
+}
+
+.notif-card--unread {
+  border-left: 4px solid var(--purple-mid);
+}
+
+.notif-card--unread::after {
+  content: '';
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--purple-mid);
+}
+
+/* Icône */
+.notif-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.notif-icon--alert   { background: #FDEAEE; color: #E84C6A; }
+.notif-icon--info    { background: var(--purple-bg); color: var(--purple-mid); }
+.notif-icon--contact { background: #E7F5EE; color: #2BAF6A; }
+
+.notif-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Contenu */
+.notif-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.notif-body__title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+
+.notif-body__desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notif-body__time {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Bouton action (optionnel) */
+.notif-action {
+  align-self: center;
+  background: var(--purple-dark);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.notif-action:hover { background: var(--purple-mid); }
+
+/* ── ÉTAT VIDE ── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 64px 0;
+  color: var(--text-muted);
+}
+
+.empty-state p {
+  font-size: 15px;
+}
+
+/* ── BOTTOM NAV ── */
+.bottombar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: var(--bottombar-h);
+  background: var(--purple-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 24px;
+  z-index: 100;
+}
+
+.bottombar__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+.bottombar__item:hover { color: #fff; }
+
+.bottombar__fab {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--purple-dark);
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(74, 71, 163, 0.25);
+  transition: transform 0.15s;
+}
+.bottombar__fab:hover { transform: scale(1.07); }
+
+/* ── ANIMATION ENTRÉE ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.notif-card {
+  animation: fadeUp 0.25s ease both;
+}
