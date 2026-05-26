@@ -13,11 +13,18 @@
 
 <?php require('../module/header.php'); ?>
 
-  <main>
+<!-- SUB-HEADER -->
+  <div class="subheader">
+    <button onclick="window.location.href='/'" class="back-btn" aria-label="Retour">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+    <span class="subheader-title">Notifications</span>
+  </div>
 
-    <!-- Titre + action -->
+  <main>
     <div class="notif-toprow">
-      <h2 class="notif-page-title">Notifications</h2>
       <button class="btn-ghost" id="btnReadAll">Tout marquer comme lu</button>
     </div>
 
@@ -40,7 +47,6 @@
         <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
         <line x1="2" y1="2" x2="22" y2="22"/>
       </svg>
-      <p>Aucune notification dans cette catégorie</p>
     </div>
 
   </main>
