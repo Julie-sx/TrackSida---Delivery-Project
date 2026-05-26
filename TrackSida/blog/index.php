@@ -27,7 +27,7 @@
     <section class="section">
       <h2 class="section-title">Article du mois</h2>
       <div>
-        <div class="card">
+        <div onclick="window.location.href='/blog/LaChasseAuxIST'" class="card">
           <h3 class="card-title">La chasse au IST</h3>
           <p class="card-excerpt">Découvrez comment dépister et prévenir les infections sexuellement transmissibles au quotidien. Un guide complet pour mieux comprendre les risques et se protéger efficacement.</p>
           <div class="card-footer"><button class="btn-lire">Lire plus</button></div>
