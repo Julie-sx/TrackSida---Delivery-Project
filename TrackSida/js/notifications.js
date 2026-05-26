@@ -1,111 +1,152 @@
-/* =============================
-   TRACKSIDA — notifications.js
-   ============================= */
+/* ═══════════════════════════════════════
+   TRACKSIDA – notifications.js
+═══════════════════════════════════════ */
 
-// ── Données de démonstration ──────────────────────────────────────────────────
+/* ── DONNÉES ──────────────────────────────────────── */
+/*
+  type  : 'contact' | 'ist' | 'article' | 'profil'
+  unread: true = non lue
+  link  : page vers laquelle naviguer (optionnel)
+*/
 const NOTIFICATIONS = [
   {
     id: 1,
-    type: 'alert',
-    title: 'Sid\'Alert envoyée',
-    desc: 'Tu as prévenu 3 partenaires il y a 2 heures.',
-    time: 'Il y a 2h',
+    type: 'contact',
+    title: 'Nouveau contact ajouté',
+    desc: 'Alex M. a été ajouté à ta liste de partenaires.',
+    time: 'Il y a 5 min',
     unread: true,
-    action: { label: 'Voir', href: '#' }
+    link: '/contact'
   },
   {
     id: 2,
-    type: 'contact',
-    title: 'Nouveau contact ajouté',
-    desc: 'Alex M. a été ajouté à tes partenaires.',
-    time: 'Il y a 4h',
+    type: 'ist',
+    title: 'IST signalée par un partenaire',
+    desc: 'Un de tes partenaires a signalé une IST. Pense à te faire dépister.',
+    time: 'Il y a 1h',
     unread: true,
-    action: { label: 'Profil', href: '#' }
+    link: '/alerte'
   },
   {
     id: 3,
-    type: 'info',
-    title: 'Rappel de dépistage',
-    desc: 'Ton prochain dépistage est recommandé dans 30 jours.',
-    time: 'Hier',
+    type: 'contact',
+    title: 'Contact modifié',
+    desc: 'Les informations de Jordan T. ont été mises à jour.',
+    time: 'Il y a 3h',
     unread: true,
-    action: { label: 'Carte', href: '#' }
+    link: '/contact'
   },
   {
     id: 4,
-    type: 'alert',
-    title: 'Réponse reçue',
-    desc: 'Jordan T. a confirmé avoir reçu ton alerte.',
+    type: 'ist',
+    title: 'IST signalée par toi',
+    desc: 'Tu as signalé une IST. Tes partenaires ont été prévenus.',
     time: 'Hier',
-    unread: false,
-    action: null
+    unread: true,
+    link: '/alerte'
   },
   {
     id: 5,
-    type: 'info',
-    title: 'Mise à jour disponible',
-    desc: 'Une nouvelle version de TRACKSIDA est disponible.',
-    time: 'Il y a 2 jours',
+    type: 'article',
+    title: 'Nouvel article disponible',
+    desc: 'Tout savoir sur la PrEP – prévention et accès.',
+    time: 'Hier',
     unread: false,
-    action: null
+    link: '/blog'
   },
   {
     id: 6,
-    type: 'contact',
-    title: 'Partenaire introuvable',
-    desc: 'Le contact Sam L. n\'a pas pu être joint.',
-    time: 'Il y a 3 jours',
+    type: 'profil',
+    title: 'Profil mis à jour',
+    desc: 'Ton profil a bien été modifié.',
+    time: 'Il y a 2 jours',
     unread: false,
-    action: { label: 'Modifier', href: '#' }
+    link: '/profil'
   },
   {
     id: 7,
-    type: 'info',
-    title: 'Centre Dép-IST proche',
-    desc: 'Un nouveau centre a ouvert à moins de 5 km de chez toi.',
-    time: 'Il y a 5 jours',
+    type: 'contact',
+    title: 'Nouveau contact ajouté',
+    desc: 'Sam L. a été ajouté à ta liste de partenaires.',
+    time: 'Il y a 3 jours',
     unread: false,
-    action: { label: 'Carte', href: '#' }
+    link: '/contact'
+  },
+  {
+    id: 8,
+    type: 'article',
+    title: 'Nouvel article disponible',
+    desc: 'IST et vie quotidienne : briser les tabous.',
+    time: 'Il y a 4 jours',
+    unread: false,
+    link: '/blog'
   }
 ];
 
-// ── État ──────────────────────────────────────────────────────────────────────
-let currentFilter = 'all';
-let notifications  = NOTIFICATIONS.map(n => ({ ...n }));
-
-// ── Icônes SVG par type ───────────────────────────────────────────────────────
+/* ── ICÔNES PAR TYPE ──────────────────────────────── */
 const ICONS = {
-  alert: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-    <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
-  </svg>`,
-  info: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="12" cy="12" r="10"/>
-    <line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-  </svg>`,
-  contact: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-    <circle cx="9" cy="7" r="4"/>
-    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-  </svg>`
+  contact: '👥',
+  ist:     '🔔',
+  article: '📄',
+  profil:  '👤'
 };
 
-// ── Rendu d'une carte ─────────────────────────────────────────────────────────
+/* ── ÉTAT ─────────────────────────────────────────── */
+let notifications  = NOTIFICATIONS.map(n => ({ ...n }));
+let currentFilter  = 'all';
+
+/* ── HELPERS ──────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+
+function unreadCount() {
+  return notifications.filter(n => n.unread).length;
+}
+
+/* Met à jour le badge dans le header (si présent) */
+function updateBadge() {
+  const badge = document.querySelector('.notif-badge');
+  if (!badge) return;
+  const count = unreadCount();
+  badge.textContent = count;
+  badge.style.display = count > 0 ? 'flex' : 'none';
+}
+
+/* ── MARQUER UNE NOTIF COMME LUE ──────────────────── */
+function markRead(id) {
+  const notif = notifications.find(n => n.id === id);
+  if (!notif || !notif.unread) return;
+
+  notif.unread = false;
+
+  /* Animation sur la carte */
+  const card = document.querySelector(`.notif-card[data-id="${id}"]`);
+  if (card) {
+    card.classList.remove('unread');
+  }
+
+  updateBadge();
+}
+
+/* ── MARQUER TOUTES COMME LUES ────────────────────── */
+function markAllRead() {
+  notifications.forEach(n => { n.unread = false; });
+  /* Met à jour toutes les cartes visibles sans re-render */
+  document.querySelectorAll('.notif-card.unread').forEach(card => {
+    card.classList.remove('unread');
+  });
+  updateBadge();
+}
+
+/* ── RENDU D'UNE CARTE ────────────────────────────── */
 function createCard(notif, delay) {
-  const card = document.createElement('article');
-  card.className = `notif-card${notif.unread ? ' notif-card--unread' : ''}`;
-  card.setAttribute('data-id', notif.id);
-  card.setAttribute('data-type', notif.type);
-  card.style.animationDelay = `${delay * 50}ms`;
-  card.setAttribute('role', 'button');
-  card.setAttribute('tabindex', '0');
-  card.setAttribute('aria-label', notif.title);
+  const article = document.createElement('article');
+  article.className = `notif-card${notif.unread ? ' unread' : ''}`;
+  article.setAttribute('data-id', notif.id);
+  article.setAttribute('data-type', notif.type);
+  article.setAttribute('role', 'listitem');
+  article.style.animationDelay = `${delay * 45}ms`;
 
-  const actionHTML = notif.action
-    ? `<button class="notif-action" data-href="${notif.action.href}">${notif.action.label}</button>`
-    : '';
-
-  card.innerHTML = `
+  article.innerHTML = `
     <div class="notif-icon notif-icon--${notif.type}" aria-hidden="true">
       ${ICONS[notif.type]}
     </div>
@@ -114,39 +155,26 @@ function createCard(notif, delay) {
       <p class="notif-body__desc">${notif.desc}</p>
       <time class="notif-body__time">${notif.time}</time>
     </div>
-    ${actionHTML}
+    <button
+      class="btn-mark-read"
+      aria-label="Marquer comme lu"
+      data-id="${notif.id}"
+    >Lu ✓</button>
   `;
 
-  // Marquer comme lu au clic
-  card.addEventListener('click', (e) => {
-    if (e.target.classList.contains('notif-action')) return;
-    markAsRead(notif.id);
+  /* Clic sur le bouton → marquer comme lu */
+  article.querySelector('.btn-mark-read').addEventListener('click', (e) => {
+    e.stopPropagation();
+    markRead(notif.id);
   });
 
-  // Accessibilité clavier
-  card.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      markAsRead(notif.id);
-    }
-  });
-
-  // Bouton action
-  const actionBtn = card.querySelector('.notif-action');
-  if (actionBtn) {
-    actionBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      markAsRead(notif.id);
-    });
-  }
-
-  return card;
+  return article;
 }
 
-// ── Rendu de la liste ─────────────────────────────────────────────────────────
+/* ── RENDU DE LA LISTE ────────────────────────────── */
 function renderList() {
-  const list       = document.getElementById('notif-list');
-  const emptyState = document.getElementById('empty-state');
+  const list  = $('notifList');
+  const empty = $('notifEmpty');
 
   const filtered = currentFilter === 'all'
     ? notifications
@@ -155,61 +183,25 @@ function renderList() {
   list.innerHTML = '';
 
   if (filtered.length === 0) {
-    emptyState.hidden = false;
+    empty.hidden = false;
     return;
   }
 
-  emptyState.hidden = true;
-  filtered.forEach((notif, i) => {
-    list.appendChild(createCard(notif, i));
-  });
+  empty.hidden = true;
+  filtered.forEach((notif, i) => list.appendChild(createCard(notif, i)));
 
   updateBadge();
 }
 
-// ── Marquer comme lu ─────────────────────────────────────────────────────────
-function markAsRead(id) {
-  const notif = notifications.find(n => n.id === id);
-  if (!notif || !notif.unread) return;
-
-  notif.unread = false;
-
-  // Animation douce sur la carte
-  const card = document.querySelector(`.notif-card[data-id="${id}"]`);
-  if (card) {
-    card.classList.remove('notif-card--unread');
-    card.style.transition = 'opacity 0.3s';
-    setTimeout(() => { card.style.opacity = '0.75'; }, 10);
-    setTimeout(() => { card.style.opacity = '1'; }, 300);
-  }
-
-  updateBadge();
-}
-
-// ── Tout marquer comme lu ─────────────────────────────────────────────────────
-function markAllAsRead() {
-  notifications.forEach(n => { n.unread = false; });
-  renderList();
-}
-
-// ── Badge de l'icône cloche ───────────────────────────────────────────────────
-function updateBadge() {
-  const unreadCount = notifications.filter(n => n.unread).length;
-  const badge = document.getElementById('badge-count');
-  badge.textContent = unreadCount;
-  badge.dataset.count = unreadCount;
-}
-
-// ── Filtres ───────────────────────────────────────────────────────────────────
+/* ── FILTRES ──────────────────────────────────────── */
 function initFilters() {
-  const buttons = document.querySelectorAll('.filter-btn');
-  buttons.forEach(btn => {
+  document.querySelectorAll('.filter-pill').forEach(btn => {
     btn.addEventListener('click', () => {
-      buttons.forEach(b => {
-        b.classList.remove('filter-btn--active');
+      document.querySelectorAll('.filter-pill').forEach(b => {
+        b.classList.remove('filter-pill--active');
         b.setAttribute('aria-selected', 'false');
       });
-      btn.classList.add('filter-btn--active');
+      btn.classList.add('filter-pill--active');
       btn.setAttribute('aria-selected', 'true');
       currentFilter = btn.dataset.filter;
       renderList();
@@ -217,13 +209,10 @@ function initFilters() {
   });
 }
 
-// ── Init ──────────────────────────────────────────────────────────────────────
-function init() {
+/* ── INIT ─────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
   initFilters();
   renderList();
 
-  document.getElementById('btn-read-all')
-    .addEventListener('click', markAllAsRead);
-}
-
-document.addEventListener('DOMContentLoaded', init);
+  $('btnReadAll').addEventListener('click', markAllRead);
+});
