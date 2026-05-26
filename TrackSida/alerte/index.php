@@ -12,11 +12,8 @@
 
 <div class="app">
 
-  <?php
-  require('../module/header.php');
-?>
+  <?php require('../module/header.php'); ?>
 
-  <!-- ══ SUB-HEADER (global style.css) ══ -->
   <div class="subheader">
     <button onclick="window.location.href='/'" class="back-btn" aria-label="Retour">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -26,7 +23,6 @@
     <span class="subheader-title">Sid'Alerte</span>
   </div>
 
-  <!-- ══ MAIN ══ -->
   <main>
 
     <button class="cta-btn" id="openSignalBtn">Signaler une IST</button>
@@ -42,13 +38,9 @@
 
   </main>
 
-  <!-- ══ FOOTER (global style.css) ══ -->
-  <!-- FOOTER -->
-  <?php
-  require('../module/footer.php');
-  ?>
+  <?php require('../module/footer.php'); ?>
 
-</div><!-- /.app -->
+</div>
 
 <!-- ══ MODAL – SIGNALEMENT ══ -->
 <div class="overlay" id="signalOverlay" role="dialog" aria-modal="true">
@@ -89,23 +81,6 @@
   </div>
 </div>
 
-<!-- ══ MODAL – RÉSULTAT (dots) ══ -->
-<div class="overlay" id="resultOverlay" role="dialog" aria-modal="true">
-  <div class="modal">
-    <div class="modal-header">
-      <h3>Résultat Dépistage</h3>
-      <button class="close-btn" data-close="resultOverlay">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="result-btns">
-        <button class="result-btn positif" id="btnPositif">Positif</button>
-        <button class="result-btn negatif" id="btnNegatif">Négatif</button>
-      </div>
-      <div onclick="window.location.href='/'" class="find-center">Trouver un centre de dépistage</div>
-    </div>
-  </div>
-</div>
-
 <!-- ══ MODAL – AJOUTER UN DÉPISTAGE ══ -->
 <div class="overlay" id="depistageOverlay" role="dialog" aria-modal="true">
   <div class="modal">
@@ -133,7 +108,7 @@
         <input type="date" id="depistageDate" />
       </div>
       <div class="form-group">
-        <label>Résultat</label>
+        <label>Résultat <span class="req">*</span></label>
         <div class="result-btns small">
           <button class="result-btn positif" id="depPositif">Positif</button>
           <button class="result-btn negatif" id="depNegatif">Négatif</button>

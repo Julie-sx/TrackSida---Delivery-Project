@@ -380,3 +380,27 @@
       transition: background .2s, transform .15s;
     }
     .btn-lire:hover { background: var(--purple-dk); transform: scale(1.04); }
+
+    /* ── AJOUT ARTICLE ── */
+.section-add {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: -8px;
+}
+
+.btn-add-article {
+  background: var(--purple);
+  color: var(--white);
+  border: none;
+  border-radius: 30px;
+  padding: 8px 18px;
+  font-size: 12px;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: background .2s, transform .15s;
+}
+.btn-add-article:hover {
+  background: var(--purple-dk);
+  transform: scale(1.04);
+}

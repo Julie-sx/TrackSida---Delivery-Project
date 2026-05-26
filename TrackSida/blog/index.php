@@ -24,6 +24,12 @@
 
   <!-- MAIN -->
   <main>
+    <section class="section-add">
+      <button class="btn-add-article" onclick="">
+        + Ajouter un article
+      </button>
+    </section>
+
     <section class="section">
       <h2 class="section-title">Article du mois</h2>
       <div>

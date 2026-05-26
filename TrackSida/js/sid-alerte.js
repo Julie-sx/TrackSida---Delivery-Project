@@ -11,7 +11,6 @@ const CONTACTS = [
   { id: 5, name: 'Emma L.',     initials: 'EL' },
 ];
 
-// result: 'unknown' | 'positif' | 'negatif'
 let history = [
   { id: 1, type: 'contact',   label: 'Un de vos contacts a signalé une IST', result: 'unknown' },
   { id: 2, type: 'contact',   label: 'Un de vos contacts a signalé une IST', result: 'unknown' },
@@ -32,7 +31,6 @@ const $ = id => document.getElementById(id);
 function getColor(item) {
   if (item.result === 'positif') return 'orange';
   if (item.result === 'negatif') return 'green';
-  // unknown
   if (item.type === 'contact')   return 'blue';
   if (item.type === 'signal')    return 'orange';
   if (item.type === 'depistage') return 'purple';
@@ -67,14 +65,12 @@ function renderHistory() {
     div.className = `history-item ${getColor(item)}`;
     div.dataset.id = item.id;
 
-    div.innerHTML = `
-      <span class="item-text">${item.label}</span>
-      <button class="dots-btn" data-id="${item.id}">···</button>
-    `;
+    /* ── Plus de bouton "..." : juste le label ── */
+    div.innerHTML = `<span class="item-text">${item.label}</span>`;
+
     list.appendChild(div);
   });
 
-  // voir plus label
   const btn = $('voirPlusBtn');
   if (history.length <= VISIBLE_DEFAULT) {
     btn.style.display = 'none';
@@ -92,48 +88,6 @@ $('voirPlusBtn').addEventListener('click', () => {
   showAll = !showAll;
   renderHistory();
 });
-
-/* ── DOTS → RESULT MODAL ─────────────────────────── */
-let activeItemId = null;
-
-document.getElementById('historyList').addEventListener('click', e => {
-  const btn = e.target.closest('.dots-btn');
-  if (!btn) return;
-
-  activeItemId = parseInt(btn.dataset.id);
-  const item = history.find(h => h.id === activeItemId);
-
-  // pre-select known result
-  $('btnPositif').classList.remove('selected');
-  $('btnNegatif').classList.remove('selected');
-  if (item.result === 'positif') $('btnPositif').classList.add('selected');
-  if (item.result === 'negatif') $('btnNegatif').classList.add('selected');
-
-  openOverlay('resultOverlay');
-});
-
-function selectResult(result) {
-  $('btnPositif').classList.toggle('selected', result === 'positif');
-  $('btnNegatif').classList.toggle('selected', result === 'negatif');
-
-  if (activeItemId !== null) {
-    const item = history.find(h => h.id === activeItemId);
-    if (item) {
-      // update label if it's a contact item (unknown → now we know)
-      if (item.type === 'contact' && item.result === 'unknown') {
-        item.label = result === 'positif'
-          ? 'Un de vos contacts a signalé une IST – Positif'
-          : 'Un de vos contacts a signalé une IST – Négatif';
-      }
-      item.result = result;
-      renderHistory();
-      showToast(`Résultat enregistré : ${result === 'positif' ? 'Positif ✓' : 'Négatif ✓'}`);
-    }
-  }
-}
-
-$('btnPositif').addEventListener('click', () => selectResult('positif'));
-$('btnNegatif').addEventListener('click', () => selectResult('negatif'));
 
 /* ── CONTACTS DANS SIGNALEMENT ───────────────────── */
 let selectedContacts = new Set();
@@ -217,7 +171,8 @@ $('openDepistageBtn').addEventListener('click', () => {
   openOverlay('depistageOverlay');
 });
 
-/* ── SUBMIT DÉPISTAGE ────────────────────────────── */
+/* ── SUBMIT DÉPISTAGE ──────────────────────────────
+   Résultat obligatoire désormais                    */
 $('submitDepistage').addEventListener('click', () => {
   const type = $('depistageType').value;
   const date = $('depistageDate').value;
@@ -228,7 +183,14 @@ $('submitDepistage').addEventListener('click', () => {
     return;
   }
   if (!depResult) {
-    showToast('Veuillez sélectionner un résultat.');
+    showToast('Veuillez sélectionner un résultat (Positif ou Négatif).');
+    /* Mise en évidence visuelle des boutons */
+    $('depPositif').classList.add('required-highlight');
+    $('depNegatif').classList.add('required-highlight');
+    setTimeout(() => {
+      $('depPositif').classList.remove('required-highlight');
+      $('depNegatif').classList.remove('required-highlight');
+    }, 1200);
     return;
   }
 
@@ -263,7 +225,7 @@ document.querySelectorAll('.overlay').forEach(overlay => {
 /* ── ESC ─────────────────────────────────────────── */
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
-    ['signalOverlay', 'resultOverlay', 'depistageOverlay'].forEach(closeOverlay);
+    ['signalOverlay', 'depistageOverlay'].forEach(closeOverlay);
   }
 });
 
