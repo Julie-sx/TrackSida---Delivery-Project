@@ -28,6 +28,8 @@ let showAll = false;
 /* ── HELPERS ─────────────────────────────────────── */
 const $ = id => document.getElementById(id);
 
+document.addEventListener('DOMContentLoaded', () => {
+
 function getColor(item) {
   if (item.result === 'positif') return 'orange';
   if (item.result === 'negatif') return 'green';
@@ -231,3 +233,5 @@ document.addEventListener('keydown', e => {
 
 /* ── INIT ────────────────────────────────────────── */
 renderHistory();
+
+}); // DOMContentLoaded
