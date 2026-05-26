@@ -11,7 +11,7 @@
 </head>
 <body class="app">
 
-  <?php require('./module/header.php'); ?>
+<?php require('../module/header.php'); ?>
 
   <main>
 
@@ -45,8 +45,8 @@
 
   </main>
 
-  <?php require('./module/footer.php'); ?>
+<?php require('../module/footer.php'); ?>
 
-  <script src="../js/notifications.js"></script>
+<script src="../js/notifications.js"></script>
 </body>
 </html>
