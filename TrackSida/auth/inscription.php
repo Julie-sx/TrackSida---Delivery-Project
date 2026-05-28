@@ -3,7 +3,7 @@
 require_once('../script/bdd.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+    echo("reception data...");
     $prenom = isset($_POST['prenom']) ? safeInput($_POST['prenom']) : '';
     $nom = isset($_POST['nom']) ? safeInput($_POST['nom']) : '';
     $gender = isset($_POST['gender']) ? safeInput($_POST['gender']) : '';
