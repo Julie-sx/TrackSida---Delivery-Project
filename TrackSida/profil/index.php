@@ -1,3 +1,5 @@
+<?php require_once('data-profil.php'); ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,10 +14,6 @@
 
 <?php
   require('../module/header.php');
-  require_once('data-profil.php');
-  global $userPseudo;
-  global $userEmail;
-  global $userDateNaissance;
   ?>
 
 <div class="app">
@@ -43,7 +41,7 @@
         <div class="avatar-status" id="avatarStatus"></div>
       </div>
       <div class="hero-info">
-        <h1 class="hero-name" id="heroName"><?php echo($userPseudo);?></h1>
+        <h1 class="hero-name" id="heroName"><?= htmlspecialchars($userPseudo) ?></h1>
         <div class="hero-meta">
           <span class="hero-handle" id="heroHandle">@[session:username]</span>
           <span class="hero-badge" id="heroBadge">[session:accountType]</span>
@@ -86,7 +84,7 @@
             <svg width="15" height="15" fill="none" stroke="#8585A8" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             E-mail
           </div>
-          <div class="info-value" id="valEmail"><?php echo($userEmail);?></div>
+          <div class="info-value" id="valEmail"><?= htmlspecialchars($userEmail) ?></div>
           <input class="info-input hidden" id="inputEmail" type="email" placeholder="[session:email]" />
         </div>
 
@@ -108,7 +106,7 @@
             <svg width="15" height="15" fill="none" stroke="#8585A8" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             Date de naissance
           </div>
-          <div class="info-value" id="valBirth"><?php echo($userDateNaissance);?></div>
+          <div class="info-value" id="valBirth"><?= htmlspecialchars($userDateNaissance) ?></div>
           <input class="info-input hidden" id="inputBirth" type="date" />
         </div>
 
