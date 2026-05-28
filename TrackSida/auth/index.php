@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
     <head>
+        <?php
+            require('../script/datas-traitment.php');
+            if(viewSession()){
+                header('Location:../profil/');
+            }
+        ?>
         <meta charset="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <title>Tracksida – Connexion / Inscription</title>
             <link rel="stylesheet" href="../css/auth.css" />
         </head>
     <body>
-
         <?php require('../module/header.php');?>
 
         <div class="auth-bg"></div>
