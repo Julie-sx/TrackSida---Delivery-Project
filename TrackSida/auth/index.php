@@ -1,6 +1,3 @@
-
-raw
-Auth · HTML
 <!DOCTYPE html>
 <html lang="fr">
     <head>
