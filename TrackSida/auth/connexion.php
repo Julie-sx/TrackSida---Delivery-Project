@@ -1,6 +1,6 @@
 <?php
 
-require_once('../script/bdd.php');
+require_once('../script/datas-traitment.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
