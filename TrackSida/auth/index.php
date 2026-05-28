@@ -9,7 +9,7 @@
         </head>
     <body>
 
-        <?php require_once("./module/header.php");?>
+        <?php require('../module/header.php');?>
 
         <div class="auth-bg"></div>
     
@@ -185,7 +185,7 @@
         </div>
 
 
-        <?php require_once("./module/footer.php");?>
+        <?php require('../module/footer.php');?>
 
 
     </body>
