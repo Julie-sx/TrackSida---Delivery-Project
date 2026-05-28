@@ -6,7 +6,7 @@ require_once 'bdd.php';
 // Permet de faire des selects ; via une table, une liste d'infos a selectionner, et une liste de paramètres
 // exemple : selectData("utilisateur",["name","age"],["id"=>5]);
 
-function selectData(string $table, array|string $infos = '*', array $parametres = []){
+function selectData(string $table, array|string $infos = '*', array $parametres = [],string $other=''){
     global $pdo;
 
     //Creation requete
@@ -21,6 +21,8 @@ function selectData(string $table, array|string $infos = '*', array $parametres 
         $conditions = implode(' AND ', array_map(fn($key) => "`$key` = :$key", array_keys($parametres)));
         $sql .= " WHERE $conditions";
     }
+
+    $sql.=$other;
 
     //execution PDO
     $stmt = $pdo->prepare($sql);
