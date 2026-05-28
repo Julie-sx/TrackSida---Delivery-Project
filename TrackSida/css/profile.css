@@ -90,6 +90,7 @@ header {
   background: var(--purple-lt);
   padding: 10px 24px;
   display: flex;
+  justify-content: space-around;
   align-items: center;
   gap: 12px;
 }
@@ -102,6 +103,8 @@ header {
   flex: 1;
   text-align: center;
 }
+
+
 
 .back-btn {
   background: rgba(255,255,255,.25);
