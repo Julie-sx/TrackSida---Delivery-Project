@@ -33,6 +33,7 @@ global $userDateNaissance;
         
       </button>
       <span class="subheader-title">Mon profil</span>
+    </div>
     <div id="editToggleBtn" class="edit-btn" onclick="toggleEdit()">
         <svg xmlns="http://www.w3.org/2000/svg"
             width="18"
