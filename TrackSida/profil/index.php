@@ -257,7 +257,7 @@ global $userDateNaissance;
     <div class="section danger-section" data-anim="6">
       <div class="section-title danger-title">
         <svg width="16" height="16" fill="none" stroke="#E74C3C" stroke-width="2.2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        Zone danger
+
       </div>
       <div class="danger-buttons">
         <button class="btn-logout" onclick="confirmLogout()">
@@ -290,6 +290,29 @@ global $userDateNaissance;
         <button class="btn-modal-confirm" id="modalConfirmBtn"></button>
       </div>
     </div>
+  </div>
+
+  <!-- MODAL Changer mdp -->
+  <div class="modal-overlay hidden" id="changeMdp">
+
+    <form class="modal-content">
+      
+      <label for="mdpInput">Nouveau mot de passe</label>
+
+      <input 
+        type="password"
+        id="mdpInput"
+        name="mdp"
+        placeholder="Entrez votre nouveau mot de passe"
+        required
+      >
+
+      <button type="submit">
+        Enregistrer
+      </button>
+
+    </form>
+
   </div>
 
   <!-- TOAST -->
