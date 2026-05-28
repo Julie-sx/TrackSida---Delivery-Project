@@ -18,7 +18,7 @@
             <!-- Logo -->
             <div class="auth-brand">
             <a href="/" class="auth-logo">Tracksida</a>
-            <span class="auth-tagline">Ton espace santé sexuelle</span>
+            <span class="auth-tagline">Ton espace santé</span>
             </div>
         
             <!-- Card unique -->
@@ -187,6 +187,7 @@
 
         <?php require('../module/footer.php');?>
 
+        <script src="../js/auth.js"></script>
 
     </body>
 </html>
