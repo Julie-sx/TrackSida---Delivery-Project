@@ -86,9 +86,17 @@ header {
 }
 
 /* ─── SUB-HEADER ─── */
+
 .subheader {
   background: var(--purple-lt);
   padding: 10px 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.subheader-left {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -99,40 +107,37 @@ header {
   font-weight: 700;
   color: var(--white);
   letter-spacing: .4px;
-  flex: 1;
-  text-align: center;
 }
 
-.back-btn {
-  background: rgba(255,255,255,.25);
-  border: none;
-  border-radius: 50%;
-  width: 34px; height: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--white);
-  flex-shrink: 0;
-  transition: background .2s;
-}
-.back-btn:hover { background: rgba(255,255,255,.4); }
+/* Bouton retour */
 
+.back-btn,
 .edit-btn {
   background: rgba(255,255,255,.25);
   border: none;
   border-radius: 50%;
-  width: 34px; height: 34px;
+  width: 34px;
+  height: 34px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   cursor: pointer;
   color: var(--white);
   flex-shrink: 0;
+
   transition: background .2s;
 }
-.edit-btn:hover { background: rgba(255,255,255,.4); }
-.edit-btn.active { background: rgba(255,255,255,.45); }
+
+.back-btn:hover,
+.edit-btn:hover {
+  background: rgba(255,255,255,.4);
+}
+
+.edit-btn.active {
+  background: rgba(255,255,255,.45);
+}
 
 /* ─── MAIN ─── */
 main {
@@ -681,6 +686,83 @@ main {
   gap: 10px;
   width: 100%;
   margin-top: 8px;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0,0,0,0.45);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: white;
+
+  width: 90%;
+  max-width: 400px;
+
+  padding: 24px;
+  border-radius: 18px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.modal-content label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.modal-content input {
+  height: 46px;
+
+  border: 1px solid #dcdcdc;
+  border-radius: 12px;
+
+  padding: 0 14px;
+
+  font-size: 14px;
+
+  outline: none;
+  transition: border-color .2s;
+}
+
+.modal-content input:focus {
+  border-color: #7c4dff;
+}
+
+.modal-content button {
+  height: 46px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #7c4dff;
+  color: white;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: .2s;
+}
+
+.modal-content button:hover {
+  background: #6937f0;
 }
 
 .btn-modal-cancel {

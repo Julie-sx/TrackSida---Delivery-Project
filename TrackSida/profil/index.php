@@ -24,21 +24,37 @@ global $userDateNaissance;
 
 <div class="app">
 
-  <div class="subheader">
-    <button onclick="window.location.href='/'" class="back-btn" aria-label="Retour">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="15 18 9 12 15 6"/>
-      </svg>
-      <span class="subheader-title">Mon profil</span>
-    </button>
-    <div onclick="toggleEdit()">
-        <span id="editToggleBtn">Edit</span>
-    </div>
-  </div>
+<div class="subheader">
 
+    <div class="subheader-left">
+      <button onclick="window.location.href='/'" class="back-btn" aria-label="Retour">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+
+      <span class="subheader-title">Mon profil</span>
+    </div>
+
+    <div id="editToggleBtn" class="edit-btn" onclick="toggleEdit()">
+      <svg xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M12 20h9"/>
+          <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
+      </svg>
+    </div>
+
+  </div>
   <!-- MAIN -->
   <main id="mainContent">
-
+  
     <!-- HERO CARD -->
     <div class="hero-card" data-anim="0">
       <div class="avatar-ring">
@@ -132,7 +148,7 @@ global $userDateNaissance;
     </div>
 
     <div class="section" data-anim="3">
-      <button class="btn-secondary mt12" onclick="changePassword()">
+      <button class="btn-secondary mt12" onclick="openChangePasswordModal()">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         Changer le mot de passe
       </button>
@@ -241,7 +257,7 @@ global $userDateNaissance;
     <div class="section danger-section" data-anim="6">
       <div class="section-title danger-title">
         <svg width="16" height="16" fill="none" stroke="#E74C3C" stroke-width="2.2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        Zone danger
+
       </div>
       <div class="danger-buttons">
         <button class="btn-logout" onclick="confirmLogout()">
@@ -274,6 +290,29 @@ global $userDateNaissance;
         <button class="btn-modal-confirm" id="modalConfirmBtn"></button>
       </div>
     </div>
+  </div>
+
+  <!-- MODAL Changer mdp -->
+  <div class="modal-overlay hidden" id="changeMdp">
+
+    <form class="modal-content">
+      
+      <label for="mdpInput">Nouveau mot de passe</label>
+
+      <input 
+        type="password"
+        id="mdpInput"
+        name="mdp"
+        placeholder="Entrez votre nouveau mot de passe"
+        required
+      >
+
+      <button type="submit">
+        Enregistrer
+      </button>
+
+    </form>
+
   </div>
 
   <!-- TOAST -->

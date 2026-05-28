@@ -292,16 +292,40 @@ function savePref(key, value) {
    MOT DE PASSE
    ────────────────────────────────────────────────────────────── */
 
-function changePassword() {
-  /*
-   * Rediriger vers la page de changement de mot de passe,
-   * ou ouvrir un bottom sheet selon ton architecture.
-   *
-   * window.location.href = '/auth/change-password?token=[session:token]';
-   */
-  showToast('Redirection vers le changement de mot de passe…');
-  console.log('[Track SIDA] changePassword triggered');
+function openChangePasswordModal() {
+  const modal = document.getElementById("changeMdp");
+  modal.classList.remove("hidden");
+
+  console.log("modal opened");
 }
+
+function closeChangePasswordModal() {
+  const modal = document.getElementById("changeMdp");
+  modal.classList.add("hidden");
+
+  console.log("modal closed");
+}
+
+// option : clic sur overlay pour fermer
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("changeMdp");
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeChangePasswordModal();
+    }
+  });
+
+  const form = modal.querySelector("form");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+     const newPassword = document.getElementById("mdpInput").value;
+    console.log("Nouveau mot de passe :", newPassword);
+
+    closeChangePasswordModal();
+  });
+});
 
 /* ──────────────────────────────────────────────────────────────
    LIENS LÉGAUX
@@ -447,3 +471,37 @@ function showToast(message, type = '') {
     toast.classList.add('hidden');
   }, 2800);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const form = document.querySelector("#changeMdp form");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const newPassword = document.getElementById("newPassword").value;
+
+    try {
+      const response = await fetch("changeProfil.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+          action: "changeMdp",
+          password: newPassword
+        })
+      });
+
+      const result = await response.text();
+      console.log("Réponse serveur :", result);
+
+      // fermer modal si succès
+      document.getElementById("changeMdp").classList.add("hidden");
+
+    } catch (err) {
+      console.error("Erreur requête :", err);
+    }
+  });
+
+});
