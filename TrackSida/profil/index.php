@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <?php
-  require_once('data-profil.php');
-  ?>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>Profil – Track SIDA</title>
@@ -15,6 +12,10 @@
 
 <?php
   require('../module/header.php');
+  require_once('data-profil.php');
+  global $userPseudo;
+  global $userEmail;
+  global $userDateNaissance;
   ?>
 
 <div class="app">
