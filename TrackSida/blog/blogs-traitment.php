@@ -1,8 +1,10 @@
 <?php
     require_once '../script/datas-traitment.php';
+
+    echo('test0');
     
     $blogs=selectData('blogs',['*'],[],"ORDER BY `date` DESC");
-    
+    echo('test2');
     function createBlog(string $nom, string $url,string $description="n'hesite pas à lire cet article"){
         $blog="<div onclick=\"window.location.href='/blog/".$url."'\" class=\"card\">
           <h3 class=\"card-title\">".$nom."<\"/h3>
