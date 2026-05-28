@@ -148,7 +148,7 @@ global $userDateNaissance;
     </div>
 
     <div class="section" data-anim="3">
-      <button class="btn-secondary mt12" onclick="changePassword()">
+      <button class="btn-secondary mt12" onclick="openChangePasswordModal()">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         Changer le mot de passe
       </button>
