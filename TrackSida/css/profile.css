@@ -91,6 +91,7 @@ header {
   padding: 10px 24px;
   display: flex;
   align-items: center;
+  justify-content: space-around;
   gap: 12px;
 }
 
