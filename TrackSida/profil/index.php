@@ -33,7 +33,6 @@ global $userDateNaissance;
         
       </button>
       <span class="subheader-title">Mon profil</span>
-    <div>
     <div id="editToggleBtn" class="edit-btn" onclick="toggleEdit()">
         <svg xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -52,7 +51,6 @@ global $userDateNaissance;
 
   <!-- MAIN -->
   <main id="mainContent">
-   
   
     <!-- HERO CARD -->
     <div class="hero-card" data-anim="0">
