@@ -4,22 +4,11 @@
 
 /* ── DATA ────────────────────────────────────────── */
 const CONTACTS = [
-  { id: 1, name: 'Alice M.',    initials: 'AM' },
-  { id: 2, name: 'Baptiste R.', initials: 'BR' },
-  { id: 3, name: 'Clara D.',    initials: 'CD' },
-  { id: 4, name: 'Damien K.',   initials: 'DK' },
-  { id: 5, name: 'Emma L.',     initials: 'EL' },
+  { id: "[contact:id]", name: '[contact:prenom] [contact:nom]', initials: '[contact:initiales]' },
 ];
 
 let history = [
-  { id: 1, type: 'contact',   label: 'Un de vos contacts a signalé une IST', result: 'unknown' },
-  { id: 2, type: 'contact',   label: 'Un de vos contacts a signalé une IST', result: 'unknown' },
-  { id: 3, type: 'depistage', label: 'Vous avez fait un dépistage – Négatif', result: 'negatif' },
-  { id: 4, type: 'contact',   label: 'Un de vos contacts a signalé une IST', result: 'unknown' },
-  { id: 5, type: 'signal',    label: 'Vous avez signalé une IST', result: 'positif' },
-  { id: 6, type: 'contact',   label: 'Un de vos contacts a signalé une IST', result: 'unknown' },
-  { id: 7, type: 'depistage', label: 'Vous avez fait un dépistage – Positif', result: 'positif' },
-  { id: 8, type: 'signal',    label: 'Vous avez signalé une IST', result: 'positif' },
+  { id: "[alerte:id]", type: '[alerte:type]', label: '[alerte:label]', result: '[alerte:result]' },
 ];
 
 const VISIBLE_DEFAULT = 5;
@@ -67,7 +56,6 @@ function renderHistory() {
     div.className = `history-item ${getColor(item)}`;
     div.dataset.id = item.id;
 
-    /* ── Plus de bouton "..." : juste le label ── */
     div.innerHTML = `<span class="item-text">${item.label}</span>`;
 
     list.appendChild(div);
@@ -186,7 +174,6 @@ $('submitDepistage').addEventListener('click', () => {
   }
   if (!depResult) {
     showToast('Veuillez sélectionner un résultat (Positif ou Négatif).');
-    /* Mise en évidence visuelle des boutons */
     $('depPositif').classList.add('required-highlight');
     $('depNegatif').classList.add('required-highlight');
     setTimeout(() => {

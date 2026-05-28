@@ -19,21 +19,10 @@ if (params.get('add') === '1') {
 
 /* ── DATA ─────────────────────────────────────── */
 let contacts = [
-  { id: 1,  nom: 'S.',  prenom: 'Alex',    email: 'alex.s@mail.com',      tel: '' },
-  { id: 2,  nom: 'N.',  prenom: 'Camille', email: '',                      tel: '06 11 22 33 44' },
-  { id: 3,  nom: 'K.',  prenom: 'Gaby',    email: 'gaby.k@mail.com',      tel: '' },
-  { id: 4,  nom: 'L.',  prenom: 'Andréa',  email: 'andrea.l@mail.com',    tel: '07 55 66 77 88' },
-  { id: 5,  nom: 'P.',  prenom: 'Alexis',  email: '',                      tel: '06 99 88 77 66' },
-  { id: 6,  nom: 'E.',  prenom: 'Sacha',   email: 'sacha.e@mail.com',     tel: '' },
-  { id: 7,  nom: 'M.',  prenom: 'Morgan',  email: 'morgan.m@mail.com',    tel: '06 12 34 56 78' },
-  { id: 8,  nom: 'L.',  prenom: 'Charlie', email: 'charlie.l@mail.com',   tel: '' },
-  { id: 9,  nom: 'X.',  prenom: 'Thaïs',   email: '',                      tel: '07 23 45 67 89' },
-  { id: 10, nom: 'D.',  prenom: 'Jade',    email: 'jade.d@mail.com',      tel: '' },
-  { id: 11, nom: 'B.',  prenom: 'Luca',    email: 'luca.b@mail.com',      tel: '06 87 65 43 21' },
-  { id: 12, nom: 'R.',  prenom: 'Nina',    email: '',                      tel: '07 11 22 33 44' },
+  { id: "[contact:id]", nom: '[contact:nom]', prenom: '[contact:prenom]', email: '[contact:email]', tel: '[contact:tel]' },
 ];
 
-let nextId = 13;
+let nextId = "[contact:id]";
 
 const PER_PAGE = 9;
 let currentPage = 1;
@@ -209,11 +198,11 @@ $('ctxEdit').addEventListener('click', () => {
 
   $('formTitle').textContent = 'Modifier le contact';
   $('submitForm').textContent = 'Enregistrer';
-  $('editId').value = c.id;
-  $('fNom').value    = c.nom;
-  $('fPrenom').value = c.prenom;
-  $('fEmail').value  = c.email;
-  $('fTel').value    = c.tel;
+  $('editId').value  = "[contact:id]";
+  $('fNom').value    = '[contact:nom]';
+  $('fPrenom').value = '[contact:prenom]';
+  $('fEmail').value  = '[contact:email]';
+  $('fTel').value    = '[contact:tel]';
 
   clearErrors();
   openOverlay('formOverlay');
@@ -224,7 +213,7 @@ $('ctxDelete').addEventListener('click', () => {
   const c = contacts.find(x => x.id === ctxTargetId);
   if (!c) return;
   closeCtx();
-  $('deleteTarget').textContent = `${c.prenom} ${c.nom}`;
+  $('deleteTarget').textContent = `[contact:prenom] [contact:nom]`;
   openOverlay('deleteOverlay');
 });
 
