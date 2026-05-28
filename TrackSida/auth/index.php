@@ -8,9 +8,9 @@
             <script src="../js/auth.js" defer></script>
         </head>
     <body>
-        <header>
-            <?php require_once("./module/header.php");?>
-        </header>
+
+        <?php require_once("./module/header.php");?>
+
         <div class="auth-bg"></div>
     
         <div class="auth-page">
@@ -184,9 +184,9 @@
         
         </div>
 
-        <footer>
-            <?php require_once("./module/footer.php");?>
-        </footer>
+
+        <?php require_once("./module/footer.php");?>
+
 
     </body>
 </html>
