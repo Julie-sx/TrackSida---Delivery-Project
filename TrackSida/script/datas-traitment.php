@@ -29,7 +29,7 @@ function selectData(string $table, array|string $infos = '*', array $parametres 
     return $stmt->fetchAll();
 }
 
-//Peremet d'insérer des datas dans la bdd, il faut préciser la table, les éléments ainsi que leur valeur
+//Permet d'insérer des datas dans la bdd, il faut préciser la table, les éléments ainsi que leur valeur
 
 function insertData(string $table, array $data){
     global $pdo;
@@ -58,6 +58,24 @@ function safeInput(string $input){
 
     return $input;
 }
+
+
+
+
+function runsql(string $sql, array $parametres = []) {
+    global $pdo;
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        return $stmt->execute($parametres);
+
+    } catch (PDOException $e) {
+        die("Erreur SQL dans runsql");
+    }
+}
+
+
+
 
 //Session
 

@@ -36,6 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if($password === $dt_password){
         setSession($bdd_findUSer[0]['id_utilisateur']);
+
+        $rq_newConnexion = "UPDATE utilisateurs SET derniere_connexion = CURRENT_TIMESTAMP WHERE id_utilisateur = :id;";
+        runSql($rq_newConnexion,["id"=>$_SESSION['id_user']]);
+
         header('Location: index.php');
         exit;
     }else{
