@@ -34,6 +34,14 @@
         }
     }
 
+    function tagsList(){
+        $tags=selectData('tags',['tag_name']);
+        for($i=0;$i<count($tags);$i++){
+            $tag = $tags[$i]['tag_name'];
+            echo("<option value=\"".$tag."\">".$tag."</option>");
+        }
+    }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -110,9 +118,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-} else {
-    header('Location: add-article.php');
-    exit;
 }
 
 
