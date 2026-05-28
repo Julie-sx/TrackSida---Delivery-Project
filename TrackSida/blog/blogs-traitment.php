@@ -7,7 +7,7 @@
     echo('test2');
     function createBlog(string $nom, string $url,string $description="n'hesite pas à lire cet article"){
         $blog="<div onclick=\"window.location.href='/blog/".$url."'\" class=\"card\">
-          <h3 class=\"card-title\">".$nom."<\"/h3>
+          <h3 class=\"card-title\">".$nom."</h3>
           <p class=\"card-excerpt\">".$description."</p>
           <div class=\"card-footer\"><button class=\"btn-lire\">Lire plus</button></div>
         </div>
