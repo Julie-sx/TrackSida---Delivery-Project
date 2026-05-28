@@ -123,6 +123,18 @@
                     </div>
                     <span class="field-error" id="regEmailErr">Adresse e-mail invalide.</span>
                     </div>
+
+                    <!-- Gender -->
+                    <div class="form-group">
+                    <label for="reg-gender">Gender</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 7 10-7"/></svg>
+                        </span>
+                        <input type="text" id="reg-gender" name="gender" placeholder="homme/femme/non-binaire" autocomplete="non-défini" required />
+                    </div>
+                    <span class="field-error" id="regGenderErr">Adresse e-mail invalide.</span>
+                    </div>
         
                     <!-- Mot de passe -->
                     <div class="form-group">
