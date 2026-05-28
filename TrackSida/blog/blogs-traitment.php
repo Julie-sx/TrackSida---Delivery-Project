@@ -3,7 +3,7 @@
 
     echo('test0');
     
-    $blogs=selectData('blogs',['*'],[],"ORDER BY `date` DESC");
+    $blogs=selectData('blogs','*',[],"ORDER BY `date` DESC");
     echo('test2');
     function createBlog(string $nom, string $url,string $description="n'hesite pas à lire cet article"){
         $blog="<div onclick=\"window.location.href='/blog/".$url."'\" class=\"card\">
