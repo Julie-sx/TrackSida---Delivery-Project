@@ -1,4 +1,10 @@
-<?php require_once('data-profil.php'); ?>
+<?php 
+require 'data-profil.php' ; 
+global $userPseudo;
+global $userEmail;
+global $userDateNaissance;
+
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
