@@ -1,0 +1,365 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --purple:    #7B7FD4;
+    --purple-lt: #A8ABEA;
+    --purple-dk: #5557B0;
+    --purple-bg: #EEEFFE;
+    --bg:        #F4F5FF;
+    --white:     #FFFFFF;
+    --text:      #1A1A2E;
+    --muted:     #8585A8;
+    --radius:    16px;
+    --shadow:    0 4px 24px rgba(123,127,212,.15);
+    --red:       #E74C3C;
+    --green:     #2ECC71;
+}
+
+html, body {
+    min-height: 100%;
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* ── FOND DÉCORATIF ── */
+.auth-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+.auth-bg::before {
+    content: '';
+    position: absolute;
+    top: -120px; left: -120px;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(168,171,234,.35) 0%, transparent 70%);
+    animation: floatA 8s ease-in-out infinite;
+}
+.auth-bg::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; right: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(123,127,212,.22) 0%, transparent 70%);
+    animation: floatB 10s ease-in-out infinite;
+}
+@keyframes floatA {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50%       { transform: translate(30px,20px) scale(1.06); }
+}
+@keyframes floatB {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50%       { transform: translate(-20px,-30px) scale(1.08); }
+}
+
+/* ── LAYOUT ── */
+.auth-page {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px 40px;
+    gap: 24px;
+}
+
+/* ── LOGO ── */
+.auth-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    animation: fadeDown .45s ease both;
+}
+.auth-logo {
+    font-size: clamp(26px, 6vw, 36px);
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: var(--purple-dk);
+    text-transform: uppercase;
+    text-decoration: none;
+}
+.auth-tagline {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: .4px;
+}
+
+/* ── CARD ── */
+.auth-card {
+    background: var(--white);
+    border-radius: 24px;
+    box-shadow: 0 8px 40px rgba(85,87,176,.14);
+    width: 100%;
+    max-width: 420px;
+    overflow: hidden;
+    animation: fadeUp .45s .08s ease both;
+}
+
+/* ── TOGGLE TABS ── */
+.auth-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--purple-bg);
+}
+.auth-tab {
+    padding: 16px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color .2s, background .2s;
+    position: relative;
+}
+.auth-tab::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 40%;
+    height: 3px;
+    background: var(--purple);
+    border-radius: 3px 3px 0 0;
+    transition: transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.auth-tab.active {
+    color: var(--purple-dk);
+    background: var(--white);
+}
+.auth-tab.active::after {
+    transform: translateX(-50%) scaleX(1);
+}
+
+/* ── PANELS ── */
+.auth-panels {
+    overflow: hidden;
+    position: relative;
+}
+
+.auth-panel {
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+    padding: 26px 28px 28px;
+    animation: panelIn .3s ease both;
+}
+.auth-panel.active { display: flex; }
+
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── FORM GROUP ── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.form-group label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: .4px;
+  text-transform: uppercase;
+}
+.input-wrap { position: relative; }
+.input-icon {
+  position: absolute;
+  left: 13px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--purple-lt);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+.form-group input {
+  width: 100%;
+  padding: 11px 13px 11px 40px;
+  border: 2px solid var(--purple-bg);
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--bg);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.form-group input:focus {
+  border-color: var(--purple-lt);
+  box-shadow: 0 0 0 4px rgba(123,127,212,.1);
+}
+.form-group input.error {
+  border-color: var(--red);
+  box-shadow: 0 0 0 4px rgba(231,76,60,.08);
+}
+.form-group input::placeholder { color: var(--muted); font-weight: 600; }
+
+/* toggle œil */
+.toggle-pwd {
+  position: absolute;
+  right: 11px; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none;
+  cursor: pointer;
+  color: var(--muted);
+  display: flex; align-items: center;
+  padding: 4px;
+  transition: color .2s;
+}
+.toggle-pwd:hover { color: var(--purple); }
+
+/* ── ERREUR ── */
+.field-error {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--red);
+  display: none;
+}
+.field-error.visible { display: block; }
+
+/* ── OPTIONS CONNEXION ── */
+.form-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.remember-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  user-select: none;
+}
+.remember-label input[type="checkbox"] {
+  accent-color: var(--purple);
+  width: 14px; height: 14px;
+  cursor: pointer;
+}
+.forgot-link {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--purple);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  background: none; border: none;
+  font-family: 'Nunito', sans-serif;
+  transition: opacity .2s;
+}
+.forgot-link:hover { opacity: .7; }
+
+/* ── 2 COLONNES ── */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ── BARRE DE FORCE ── */
+.pwd-strength {
+  display: flex;
+  gap: 5px;
+  margin-top: 5px;
+}
+.pwd-bar {
+  flex: 1; height: 4px;
+  border-radius: 4px;
+  background: var(--purple-bg);
+  transition: background .3s;
+}
+.pwd-bar.weak   { background: var(--red); }
+.pwd-bar.medium { background: #F39C12; }
+.pwd-bar.strong { background: var(--green); }
+.pwd-hint {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+/* ── CGU ── */
+.cgu-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+.cgu-row input[type="checkbox"] {
+  accent-color: var(--purple);
+  width: 15px; height: 15px;
+  margin-top: 2px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.cgu-row label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  line-height: 1.5;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.cgu-row a {
+  color: var(--purple-dk);
+  text-underline-offset: 3px;
+}
+
+/* ── BOUTON SUBMIT ── */
+.btn-submit {
+  width: 100%;
+  background: linear-gradient(135deg, var(--purple), var(--purple-dk));
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  padding: 13px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 4px 18px rgba(85,87,176,.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(85,87,176,.38);
+}
+.btn-submit:active { transform: translateY(0); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 380px) {
+  .form-row { grid-template-columns: 1fr; }
+  .auth-panel { padding: 20px 18px 24px; }
+}
