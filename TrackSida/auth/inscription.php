@@ -1,6 +1,7 @@
 <?php
 
-require_once('../script/bdd.php');
+require_once('../script/datas-traitment.php');
+
 echo('...');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo("reception data...");
