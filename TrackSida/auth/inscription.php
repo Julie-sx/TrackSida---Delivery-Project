@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $password = hash('sha256',$password);
-
+    echo('try bdd insert');
     $bdd_findUSer = selectData("utilisateurs",["id_utilisateur"],["email"=>$email]);
 
     if (!empty($bdd_findUSer)) {
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
 
     insertData("utilisateurs", $data_array);
-
+    echo("redirection...");
     header('Location: index.php?success=trytoconnect');
     exit;
 
