@@ -4,19 +4,6 @@
 
 const params = new URLSearchParams(window.location.search);
 
-if (params.get('add') === '1') {
-  $('formTitle').textContent = 'Contact';
-  $('submitForm').textContent = 'Ajouter';
-  $('editId').value = '';
-  $('fNom').value = '';
-  $('fPrenom').value = '';
-  $('fEmail').value = '';
-  $('fTel').value = '';
-
-  clearErrors();
-  openOverlay('formOverlay');
-}
-
 /* ── DATA ─────────────────────────────────────── */
 let contacts = [
   { id: "[contact:id]", nom: '[contact:nom]', prenom: '[contact:prenom]', email: '[contact:email]', tel: '[contact:tel]' },
@@ -307,3 +294,15 @@ document.addEventListener('keydown', e => {
 
 /* ── INIT ─────────────────────────────────────── */
 render();
+
+if (params.get('add') === '1') {
+  $('formTitle').textContent = 'Contact';
+  $('submitForm').textContent = 'Ajouter';
+  $('editId').value = '';
+  $('fNom').value = '';
+  $('fPrenom').value = '';
+  $('fEmail').value = '';
+  $('fTel').value = '';
+  clearErrors();
+  openOverlay('formOverlay');
+}
