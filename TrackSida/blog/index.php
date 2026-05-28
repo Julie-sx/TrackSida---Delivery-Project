@@ -47,22 +47,12 @@
     </section>
 
     <section class="section">
-      <h2 class="section-title">Tout savoir sur le sida</h2>
+      <h2 class="section-title">Tout savoir sur les IST</h2>
       <div>
         <?php allBlogsWrite(); ?>
       </div>
     </section>
 
-    <section class="section">
-      <h2 class="section-title">Les découvertes</h2>
-      <div>
-        <div class="card">
-          <h3 class="card-title">Nouveau traitement ARV</h3>
-          <p class="card-excerpt">Une injection bimestrielle efficace à 99 % : les dernières avancées scientifiques de 2025.</p>
-          <div class="card-footer"><button class="btn-lire">Lire plus</button></div>
-        </div>
-      </div>
-    </section>
   </main>
 
   <?php
