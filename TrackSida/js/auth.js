@@ -189,3 +189,26 @@ registerForm.addEventListener('submit', function(e) {
         this.submit();
     }
 });
+
+const loginForm = document.getElementById('loginForm');
+
+loginForm.addEventListener('submit', function(e) {
+    e.preventDefault(); 
+    
+    let isValid = true;
+
+    const email = document.getElementById('login-email').value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!toggleError('login-email', 'loginEmailErr', email === '' || !emailRegex.test(email))) {
+        isValid = false;
+    }
+
+    const pwd = document.getElementById('login-pwd').value;
+    if (!toggleError('login-pwd', 'loginPwdErr', pwd === '')) {
+        isValid = false;
+    }
+
+    if (isValid) {
+        this.submit();
+    }
+});
