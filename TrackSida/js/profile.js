@@ -471,3 +471,37 @@ function showToast(message, type = '') {
     toast.classList.add('hidden');
   }, 2800);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const form = document.querySelector("#changeMdp form");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const newPassword = document.getElementById("newPassword").value;
+
+    try {
+      const response = await fetch("changeProfil.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+          action: "changeMdp",
+          password: newPassword
+        })
+      });
+
+      const result = await response.text();
+      console.log("Réponse serveur :", result);
+
+      // fermer modal si succès
+      document.getElementById("changeMdp").classList.add("hidden");
+
+    } catch (err) {
+      console.error("Erreur requête :", err);
+    }
+  });
+
+});
