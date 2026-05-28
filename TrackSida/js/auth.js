@@ -1,15 +1,30 @@
-reg=document.getElementById('tab-register');
-inscr=document.getElementById('tab-login');
+const tabLogin = document.getElementById('tab-login');
+const tabRegister = document.getElementById('tab-register');
 
-function toggleReg(){
-    reg.ariaSelected="true";
-    inscr.ariaSelected="false";
+const panelLogin = document.getElementById('panel-login');
+const panelRegister = document.getElementById('panel-register');
+
+function switchToRegister() {
+    tabRegister.setAttribute('aria-selected', 'true');
+    tabLogin.setAttribute('aria-selected', 'false');
+
+    tabRegister.classList.add('active');
+    tabLogin.classList.remove('active');
+    
+    panelRegister.classList.add('active');
+    panelLogin.classList.remove('active');
 }
 
-function toggleInscr(){
-    inscr.ariaSelected="true";
-    reg.ariaSelected="false";
+function switchToLogin() {
+    tabLogin.setAttribute('aria-selected', 'true');
+    tabRegister.setAttribute('aria-selected', 'false');
+
+    tabLogin.classList.add('active');
+    tabRegister.classList.remove('active');
+    
+    panelLogin.classList.add('active');
+    panelRegister.classList.remove('active');
 }
 
-reg.addEventListener('click',toggleReg);
-inscr.addEventListener('click',toggleInscr);
+tabRegister.addEventListener('click', switchToRegister);
+tabLogin.addEventListener('click', switchToLogin);
