@@ -216,3 +216,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
   $('btnReadAll').addEventListener('click', markAllRead);
 });
+
+function popup(texte, couleur) {
+    // Création de l'overlay
+    const overlay = document.createElement("div");
+    overlay.style.position = "fixed";
+    overlay.style.top = "0";
+    overlay.style.left = "0";
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
+    overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+    overlay.style.display = "flex";
+    overlay.style.justifyContent = "center";
+    overlay.style.alignItems = "center";
+    overlay.style.zIndex = "9999";
+
+    const popup = document.createElement("div");
+    popup.style.backgroundColor = couleur;
+    popup.style.padding = "20px";
+    popup.style.borderRadius = "10px";
+    popup.style.boxShadow = "0 4px 10px rgba(0,0,0,0.3)";
+    popup.style.color = "white";
+    popup.style.fontSize = "18px";
+    popup.style.textAlign = "center";
+
+    popup.textContent = texte;
+
+    const boutonFermer = document.createElement("button");
+    boutonFermer.textContent = "Fermer";
+    boutonFermer.style.marginTop = "15px";
+    boutonFermer.style.display = "block";
+    boutonFermer.style.marginLeft = "auto";
+    boutonFermer.style.marginRight = "auto";
+
+    boutonFermer.onclick = () => {
+        document.body.removeChild(overlay);
+    };
+
+    popup.appendChild(document.createElement("br"));
+    popup.appendChild(boutonFermer);
+    overlay.appendChild(popup);
+    document.body.appendChild(overlay);
+    setTimeout(() => {
+        overlay.remove();
+    }, 5000);
+}
