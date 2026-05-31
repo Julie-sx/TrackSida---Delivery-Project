@@ -140,7 +140,43 @@
                     </div>
                     <span class="field-error" id="regGenderErr">Adresse e-mail invalide.</span>
                     </div>
-        
+
+                    <!-- Téléphone -->
+                    <div class="form-group">
+                    <label for="reg-phone">Téléphone</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.42 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.34 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.4a16 16 0 0 0 6.29 6.29l1.76-1.76a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        </span>
+                        <input type="tel" id="reg-phone" name="telephone" placeholder="+33 6 00 00 00 00" autocomplete="tel" required />
+                    </div>
+                    <span class="field-error" id="regPhoneErr">Numéro de téléphone invalide.</span>
+                    </div>
+
+                    <!-- Date de naissance -->
+                    <div class="form-group">
+                    <label for="reg-dob">Date de naissance</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        </span>
+                        <input type="date" id="reg-dob" name="date_naissance" autocomplete="bday" required />
+                    </div>
+                    <span class="field-error" id="regDobErr">Date de naissance requise.</span>
+                    </div>
+
+                    <!-- Ville -->
+                    <div class="form-group">
+                    <label for="reg-ville">Ville</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                        </span>
+                        <input type="text" id="reg-ville" name="ville" placeholder="Paris" autocomplete="address-level2" required />
+                    </div>
+                    <span class="field-error" id="regVilleErr">Ville requise.</span>
+                    </div>
+                            
                     <!-- Mot de passe -->
                     <div class="form-group">
                     <label for="reg-pwd">Mot de passe</label>
