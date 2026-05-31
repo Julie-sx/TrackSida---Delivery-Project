@@ -634,9 +634,9 @@ main {
   background: rgba(26,26,46,.5);
   z-index: 300;
   display: flex;
-  align-items: flex-end;
+  align-items: center;    /* ← était flex-end */
   justify-content: center;
-  padding: 0 16px 24px;
+  padding: 16px;          /* ← remplace padding: 0 16px 24px */
   animation: fadeIn .2s ease both;
 }
 .modal-overlay.hidden { display: none; }
