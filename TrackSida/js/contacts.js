@@ -154,7 +154,7 @@ let ctxTargetId = null;
 const ctxMenu = $('ctxMenu');
 
 function openCtx(btn) {
-  ctxTargetId = parseInt(btn.dataset.id);
+  ctxTargetId = btn.dataset.id;
   const rect = btn.getBoundingClientRect();
   ctxMenu.style.top  = (rect.bottom + window.scrollY + 4) + 'px';
   ctxMenu.style.left = Math.min(rect.left, window.innerWidth - 170) + 'px';
@@ -166,7 +166,7 @@ document.getElementById('contactList').addEventListener('click', e => {
   const btn = e.target.closest('.dots-btn');
   if (!btn) return;
   e.stopPropagation();
-  if (ctxMenu.classList.contains('open') && ctxTargetId === parseInt(btn.dataset.id)) {
+  if (ctxMenu.classList.contains('open') && ctxTargetId === btn.dataset.id) {
     closeCtx();
   } else {
     openCtx(btn);
@@ -185,11 +185,11 @@ $('ctxEdit').addEventListener('click', () => {
 
   $('formTitle').textContent = 'Modifier le contact';
   $('submitForm').textContent = 'Enregistrer';
-  $('editId').value  = "[contact:id]";
-  $('fNom').value    = '[contact:nom]';
-  $('fPrenom').value = '[contact:prenom]';
-  $('fEmail').value  = '[contact:email]';
-  $('fTel').value    = '[contact:tel]';
+  $('editId').value  = c.id;
+  $('fNom').value    = c.nom;
+  $('fPrenom').value = c.prenom;
+  $('fEmail').value  = c.email;
+  $('fTel').value    = c.tel;
 
   clearErrors();
   openOverlay('formOverlay');
@@ -200,7 +200,7 @@ $('ctxDelete').addEventListener('click', () => {
   const c = contacts.find(x => x.id === ctxTargetId);
   if (!c) return;
   closeCtx();
-  $('deleteTarget').textContent = `[contact:prenom] [contact:nom]`;
+  $('deleteTarget').textContent = `${c.prenom} ${c.nom}`;
   openOverlay('deleteOverlay');
 });
 
@@ -248,8 +248,8 @@ $('submitForm').addEventListener('click', () => {
 
   if (editId) {
     // update
-    const idx = contacts.findIndex(x => x.id === parseInt(editId));
-    if (idx !== -1) contacts[idx] = { id: parseInt(editId), nom, prenom, email, tel };
+    const idx = contacts.findIndex(x => x.id === editId);
+    if (idx !== -1) contacts[idx] = { id: editId, nom, prenom, email, tel };
     showToast('Contact modifié ✓');
   } else {
     // add
