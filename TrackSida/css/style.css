@@ -264,6 +264,7 @@
 
     /* ─── FOOTER ─── */
     footer {
+      z-index : 100;
       background: var(--purple);
       height: 68px;
       display: flex;
