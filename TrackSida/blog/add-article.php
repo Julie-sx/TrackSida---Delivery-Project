@@ -12,6 +12,7 @@
 
 <?php 
   require('../module/header.php'); 
+  require_once('blogs-traitment.php');
   require_once('../script/session.php');
   if(!isAdmin()){
     header('Location:../');
@@ -48,9 +49,7 @@
         <div class="form-group">
           <label for="article-tags">Tags (Sélection multiple : Ctrl/Cmd + Clic)</label>
           <select id="article-tags" name="tags[]" multiple required class="info-select-multiple">
-            <option value="transmission">Transmission</option>
-            <option value="ist">IST</option>
-            <option value="sante">Santé</option>
+            <?php echo(tagsList()); ?>
           </select>
           <span class="field-hint">Maintiens Ctrl (Windows) ou Cmd (Mac) pour sélectionner plusieurs tags.</span>
         </div>

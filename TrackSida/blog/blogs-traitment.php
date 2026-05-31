@@ -35,19 +35,40 @@
     }
 
     function tagsList(){
-        $tags=selectData('tags',['tag_name']);
-        for($i=0;$i<count($tags);$i++){
-            $tag = $tags[$i]['tag_name'];
-            echo("<option value=\"".$tag."\">".$tag."</option>");
+        $tags = selectData('tags', ['tag_name']);
+        $output_tl = "";
+        foreach ($tags as $tagRow) {
+            $tag = $tagRow['tag_name'];
+            $output_tl .= "<option value=\"" . htmlspecialchars($tag, ENT_QUOTES, 'UTF-8') . "\">" . htmlspecialchars($tag, ENT_QUOTES, 'UTF-8') . "</option>";
         }
+        return $output_tl;
     }
 
+    function insertBlogTags(int $id_blog, array $tags_names) {
+        if (empty($tags_names)) {
+            return;
+        }
+
+        foreach ($tags_names as $tag_name) {
+
+            $tag_data = selectData('tags', ['id_tag'], ['tag_name' => $tag_name]);
+
+            if (!empty($tag_data)) {
+                $id_tag = $tag_data[0]['id_tag'];
+
+                insertData('tags_list', [
+                    'id_blog' => $id_blog,
+                    'id_tag'  => $id_tag
+                ]);
+            }
+        }
+    }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $title = isset($_POST['blog_title']) ? safeInput($_POST['blog_title']) : '';
     $description = isset($_POST['description']) ? safeInput($_POST['description']) : '';
-    $description = isset($_POST['content']) ? safeInput($_POST['content']) : '';
+    $content = isset($_POST['content']) ? safeInput($_POST['content']) : '';
 
     $tags = [];
     if (isset($_POST['tags']) && is_array($_POST['tags'])) {
@@ -78,7 +99,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </head>
         <body class="app">
 
-        <?php require(\'../../module/header.php\'); ?>
+        <?php require(\'../../module/header.php\');
+        require(\'../../script/datas-traitment.php\');
+        ?>
 
         <main>
             <article class="article-page">
@@ -88,7 +111,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </button>
 
             <div class="article-tags">
-                [tags]
+                <?php
+                    $nomDossier = basename(__DIR__);
+                    $rq="SELECT tag_name FROM tags AS t LEFT JOIN tags_list AS tl ON t.id_tag = tl.id_tag LEFT	JOIN blogs AS b ON tl.id_blog = b.id_blog WHERE	blog_name LIKE \"".$nomDossier."\"";
+                    $tags=selectSQL($rq);
+                    $rq_r="";
+                    foreach($tags as $tag){
+                        $rq_r.="<span class=\"article-tag\">".$tag["tag_name"]."</span>";
+                    }
+                    echo($rq_r);
+                ?>
             </div>
 
             <h1 class="article-title">[title]</h1>
@@ -111,7 +143,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $contenu_final = str_replace('[contenu]', nl2br(htmlspecialchars($content)), $contents_final ?? $contenu_final);
 
-    insertData('blogs',['blog_name'=>$title,'blog_url'=>$title.'/','description'=>$description]);
+    $new_blog_id= insertData('blogs',['blog_name'=>$title,'blog_url'=>$title.'/','description'=>$description]);
+
+    if ($new_blog_id > 0) {
+        insertBlogTags($new_blog_id, $tags);
+    }
 
     if (file_put_contents($title.'/index.php', $contenu_final) !== false){
         header('Location: '.$title.'/');
@@ -119,7 +155,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 }
-
 
 
 ?>

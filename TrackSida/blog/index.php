@@ -32,9 +32,11 @@
     <?php
     if(isAdmin()){
       echo("<section class=\"section-add\">
-        <button class=\"btn-add-article\" onclick=\"\">
+        <a href=\"add-article.php\">
+        <button class=\"btn-add-article\">
           + Ajouter un article
         </button>
+        </a>
       </section>");
     }
     ?>

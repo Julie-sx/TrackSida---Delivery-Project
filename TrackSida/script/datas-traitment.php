@@ -31,6 +31,15 @@ function selectData(string $table, array|string $infos = '*', array $parametres 
     return $stmt->fetchAll();
 }
 
+function selectSQL(string $request){
+    global $pdo;
+
+    $stmt = $pdo->prepare($request);
+    $stmt->execute();
+
+    return $stmt->fetchAll();
+}
+
 //Permet d'insérer des datas dans la bdd, il faut préciser la table, les éléments ainsi que leur valeur
 
 function insertData(string $table, array $data){
@@ -64,7 +73,7 @@ function safeInput(string $input){
 
 
 
-function runsql(string $sql, array $parametres = []) {
+function runSql(string $sql, array $parametres = []) {
     global $pdo;
 
     try {
