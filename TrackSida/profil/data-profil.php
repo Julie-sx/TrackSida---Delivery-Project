@@ -19,5 +19,8 @@ if((!empty($userInfos))){
     exit;
 }
 
+$userPartenaires=selectSQL("SELECT COUNT(id_partenaire) as p FROM partenaires WHERE id_utilisateur = 1")[0]['p'];
+echo($userPartenaires);
+
 
 ?>
