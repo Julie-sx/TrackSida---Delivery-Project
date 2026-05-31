@@ -224,7 +224,7 @@ $('openAddBtn').addEventListener('click', () => {
 });
 
 /* ── SUBMIT FORM ──────────────────────────────── */
-$('submitForm').addEventListener('click', () => {
+$('submitForm').addEventListener('click', async () => {
   clearErrors();
 
   const nom    = $('fNom').value.trim();
@@ -246,15 +246,48 @@ $('submitForm').addEventListener('click', () => {
 
   const editId = $('editId').value;
 
+  const formData = new FormData();
+  formData.append('nom',    nom);
+  formData.append('prenom', prenom);
+  formData.append('email',  email);
+  formData.append('tel',    tel);
+
   if (editId) {
-    // update
+    // ── UPDATE ──────────────────────────────────
+    formData.append('id', editId);
+
+    let ok = false;
+    try {
+      const res  = await fetch('m-contact.php', { method: 'POST', body: formData });
+      const data = await res.json();
+      ok = data.success === true;
+    } catch (e) { ok = false; }
+
+    if (!ok) {
+      showToast('Erreur lors de la modification', '#E74C3C');
+      return;
+    }
+
     const idx = contacts.findIndex(x => x.id === editId);
     if (idx !== -1) contacts[idx] = { id: editId, nom, prenom, email, tel };
     showToast('Contact modifié ✓');
+
   } else {
-    // add
-    contacts.push({ id: nextId++, nom, prenom, email, tel });
-    currentPage = totalPages(); // go to last page to see new contact
+    // ── ADD ─────────────────────────────────────
+    let newId = null;
+    try {
+      const res  = await fetch('contact.php', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (data.success === true) newId = data.id ?? nextId++;
+    } catch (e) { newId = null; }
+
+    if (newId === null) {
+      showToast('Erreur lors de l\'ajout', '#E74C3C');
+      return;
+    }
+
+    contacts.push({ id: String(newId), nom, prenom, email, tel });
+    currentPage = totalPages();
     showToast('Contact ajouté ✓', 'var(--green)');
   }
 
