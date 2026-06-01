@@ -1,15 +1,12 @@
 <?php
-/* ═══════════════════════════════════════════════
-   TRACKSIDA – contact/m-contact.php
-   POST → modifie un partenaire existant (JSON)
-═══════════════════════════════════════════════ */
+ob_start();
 
 header('Content-Type: application/json; charset=utf-8');
 
 require_once('../script/session.php');
 
-/* ── HELPER ───────────────────────────────────── */
 function jsonError(string $message, int $code = 400): void {
+    if (ob_get_length()) ob_clean();
     http_response_code($code);
     echo json_encode(['success' => false, 'message' => $message]);
     exit;
@@ -19,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     jsonError('Méthode non autorisée.', 405);
 }
 
-/* ── Validation ───────────────────────────────── */
 $id     = trim($_POST['id']     ?? '');
 $surnom = safeInput($_POST['surnom'] ?? '');
 $email  = safeInput($_POST['email']  ?? '');
@@ -33,7 +29,6 @@ if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     jsonError('Adresse email invalide.');
 }
 
-/* ── Vérifier que le partenaire appartient à l'utilisateur connecté ── */
 $exists = selectData(
     'partenaires',
     ['id_partenaire'],
@@ -44,7 +39,6 @@ if (empty($exists)) {
     jsonError('Contact introuvable.', 404);
 }
 
-/* ── Mise à jour ──────────────────────────────── */
 $ok = runSql(
     'UPDATE partenaires
      SET surnom           = :surnom,
@@ -67,4 +61,5 @@ if (!$ok) {
     jsonError('Erreur lors de la modification.', 500);
 }
 
+if (ob_get_length()) ob_clean(); 
 echo json_encode(['success' => true]);

@@ -1,26 +1,18 @@
 <?php
-/* ═══════════════════════════════════════════════
-   TRACKSIDA – contact/contact.php
-   GET  → renvoie tous les partenaires (JSON)
-   POST → crée un nouveau partenaire (JSON)
-═══════════════════════════════════════════════ */
+ob_start();
 
 header('Content-Type: application/json; charset=utf-8');
 
 require_once('../script/session.php');
 
-/* ── HELPER ───────────────────────────────────── */
 function jsonError(string $message, int $code = 400): void {
+    if (ob_get_length()) ob_clean();
     http_response_code($code);
     echo json_encode(['success' => false, 'message' => $message]);
     exit;
 }
 
-/* ══════════════════════════════════════════════
-   GET – récupérer tous les partenaires
-══════════════════════════════════════════════ */
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-
     $contacts = selectSQL(
         'SELECT id_partenaire, surnom, email_partenaire, telephone, notes
          FROM partenaires
@@ -28,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
          ORDER BY surnom ASC'
     );
 
+    if (ob_get_length()) ob_clean();
     echo json_encode([
         'success'  => true,
         'contacts' => $contacts,
@@ -35,11 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     exit;
 }
 
-/* ══════════════════════════════════════════════
-   POST – créer un partenaire
-══════════════════════════════════════════════ */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     $surnom = safeInput($_POST['surnom'] ?? '');
     $email  = safeInput($_POST['email']  ?? '');
     $tel    = safeInput($_POST['tel']    ?? '');
@@ -59,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'notes'            => $notes,
     ]);
 
+    if (ob_get_length()) ob_clean();
     http_response_code(201);
     echo json_encode(['success' => true, 'id' => $newId]);
     exit;
