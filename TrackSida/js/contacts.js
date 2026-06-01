@@ -5,11 +5,7 @@
 const params = new URLSearchParams(window.location.search);
 
 /* ── DATA ─────────────────────────────────────── */
-let contacts = [
-  { id: "[contact:id]", nom: '[contact:nom]', prenom: '[contact:prenom]', email: '[contact:email]', tel: '[contact:tel]' },
-];
-
-let nextId = "[contact:id]";
+let contacts = [];
 
 const PER_PAGE = 9;
 let currentPage = 1;
@@ -18,12 +14,14 @@ let currentPage = 1;
 const $ = id => document.getElementById(id);
 
 function initials(c) {
-  return (c.prenom[0] || '') + (c.nom[0] || '');
+  return (c.surnom ? c.surnom[0] : '?').toUpperCase();
 }
 
 function subline(c) {
-  if (c.email && c.tel) return `${c.email} · ${c.tel}`;
-  return c.email || c.tel || '—';
+  const e = c.email_partenaire || '';
+  const t = c.telephone || '';
+  if (e && t) return `${e} · ${t}`;
+  return e || t || '—';
 }
 
 function totalPages() {
@@ -40,10 +38,8 @@ function showToast(msg, color) {
 
 /* ── RENDER ───────────────────────────────────── */
 function render() {
-  // total
   $('totalCount').textContent = contacts.length;
 
-  // slice for current page
   const start = (currentPage - 1) * PER_PAGE;
   const page  = contacts.slice(start, start + PER_PAGE);
 
@@ -60,15 +56,15 @@ function render() {
     page.forEach(c => {
       const row = document.createElement('div');
       row.className = 'contact-row';
-      row.dataset.id = c.id;
+      row.dataset.id = c.id_partenaire;
       row.innerHTML = `
         <div class="contact-bar"></div>
         <div class="contact-avatar">${initials(c)}</div>
         <div class="contact-info">
-          <div class="contact-name">${c.prenom} ${c.nom}</div>
+          <div class="contact-name">${c.surnom ?? '—'}</div>
           <div class="contact-sub">${subline(c)}</div>
         </div>
-        <button class="dots-btn" data-id="${c.id}" aria-label="Options">···</button>
+        <button class="dots-btn" data-id="${c.id_partenaire}" aria-label="Options">···</button>
       `;
       list.appendChild(row);
     });
@@ -79,7 +75,7 @@ function render() {
 
 /* ── PAGINATION ───────────────────────────────── */
 function renderPagination() {
-  const tp = totalPages();
+  const tp  = totalPages();
   const pag = $('pagination');
   pag.innerHTML = '';
 
@@ -87,7 +83,6 @@ function renderPagination() {
 
   const remaining = contacts.length - currentPage * PER_PAGE;
 
-  // info text
   const info = document.createElement('div');
   info.className = 'page-info';
   info.innerHTML = `
@@ -96,11 +91,9 @@ function renderPagination() {
   `;
   pag.appendChild(info);
 
-  // nav buttons
   const nav = document.createElement('div');
   nav.className = 'page-nav';
 
-  // prev
   const prev = document.createElement('button');
   prev.className = 'page-btn';
   prev.textContent = '←';
@@ -108,9 +101,7 @@ function renderPagination() {
   prev.addEventListener('click', () => { currentPage--; render(); });
   nav.appendChild(prev);
 
-  // page numbers (show up to 5 around current)
-  const range = pageRange(currentPage, tp);
-  range.forEach(p => {
+  pageRange(currentPage, tp).forEach(p => {
     if (p === '…') {
       const dots = document.createElement('span');
       dots.textContent = '…';
@@ -125,7 +116,6 @@ function renderPagination() {
     }
   });
 
-  // next
   const next = document.createElement('button');
   next.className = 'page-btn';
   next.textContent = '→';
@@ -162,7 +152,7 @@ function openCtx(btn) {
 }
 function closeCtx() { ctxMenu.classList.remove('open'); }
 
-document.getElementById('contactList').addEventListener('click', e => {
+$('contactList').addEventListener('click', e => {
   const btn = e.target.closest('.dots-btn');
   if (!btn) return;
   e.stopPropagation();
@@ -179,17 +169,17 @@ document.addEventListener('click', e => {
 
 /* ── EDIT ─────────────────────────────────────── */
 $('ctxEdit').addEventListener('click', () => {
-  const c = contacts.find(x => x.id === ctxTargetId);
+  const c = contacts.find(x => String(x.id_partenaire) === ctxTargetId);
   if (!c) return;
   closeCtx();
 
-  $('formTitle').textContent = 'Modifier le contact';
+  $('formTitle').textContent  = 'Modifier le contact';
   $('submitForm').textContent = 'Enregistrer';
-  $('editId').value  = c.id;
-  $('fNom').value    = c.nom;
-  $('fPrenom').value = c.prenom;
-  $('fEmail').value  = c.email;
-  $('fTel').value    = c.tel;
+  $('editId').value  = c.id_partenaire;
+  $('fNom').value    = c.surnom        ?? '';
+  $('fEmail').value  = c.email_partenaire ?? '';
+  $('fTel').value    = c.telephone     ?? '';
+  $('fNotes').value  = c.notes         ?? '';
 
   clearErrors();
   openOverlay('formOverlay');
@@ -197,16 +187,15 @@ $('ctxEdit').addEventListener('click', () => {
 
 /* ── DELETE ───────────────────────────────────── */
 $('ctxDelete').addEventListener('click', () => {
-  const c = contacts.find(x => x.id === ctxTargetId);
+  const c = contacts.find(x => String(x.id_partenaire) === ctxTargetId);
   if (!c) return;
   closeCtx();
-  $('deleteTarget').textContent = `${c.prenom} ${c.nom}`;
+  $('deleteTarget').textContent = c.surnom ?? '—';
   openOverlay('deleteOverlay');
 });
 
 $('confirmDelete').addEventListener('click', () => {
-  contacts = contacts.filter(x => x.id !== ctxTargetId);
-  // clamp page
+  contacts = contacts.filter(x => String(x.id_partenaire) !== ctxTargetId);
   if (currentPage > totalPages()) currentPage = totalPages();
   render();
   closeOverlay('deleteOverlay');
@@ -215,10 +204,10 @@ $('confirmDelete').addEventListener('click', () => {
 
 /* ── ADD CONTACT ──────────────────────────────── */
 $('openAddBtn').addEventListener('click', () => {
-  $('formTitle').textContent = 'Contact';
+  $('formTitle').textContent  = 'Contact';
   $('submitForm').textContent = 'Ajouter';
   $('editId').value = '';
-  $('fNom').value = $('fPrenom').value = $('fEmail').value = $('fTel').value = '';
+  $('fNom').value = $('fEmail').value = $('fTel').value = $('fNotes').value = '';
   clearErrors();
   openOverlay('formOverlay');
 });
@@ -227,15 +216,14 @@ $('openAddBtn').addEventListener('click', () => {
 $('submitForm').addEventListener('click', async () => {
   clearErrors();
 
-  const nom    = $('fNom').value.trim();
-  const prenom = $('fPrenom').value.trim();
+  const surnom = $('fNom').value.trim();
   const email  = $('fEmail').value.trim();
   const tel    = $('fTel').value.trim();
+  const notes  = $('fNotes').value.trim();
+  const editId = $('editId').value;
 
   let valid = true;
-
-  if (!nom)    { markError('fNom');    valid = false; }
-  if (!prenom) { markError('fPrenom'); valid = false; }
+  if (!surnom) { markError('fNom'); valid = false; }
   if (!email && !tel) {
     markError('fEmail');
     markError('fTel');
@@ -244,21 +232,19 @@ $('submitForm').addEventListener('click', async () => {
   }
   if (!valid) return;
 
-  const editId = $('editId').value;
-
   const formData = new FormData();
-  formData.append('nom',    nom);
-  formData.append('prenom', prenom);
+  formData.append('surnom', surnom);
   formData.append('email',  email);
   formData.append('tel',    tel);
+  formData.append('notes',  notes);
 
   if (editId) {
-    // ── UPDATE ──────────────────────────────────
+    /* ── UPDATE ─────────────────────────────── */
     formData.append('id', editId);
 
     let ok = false;
     try {
-      const res  = await fetch('m-contact.php', { method: 'POST', body: formData });
+      const res  = await fetch('../contact/m-contact.php', { method: 'POST', body: formData });
       const data = await res.json();
       ok = data.success === true;
     } catch (e) { ok = false; }
@@ -268,17 +254,23 @@ $('submitForm').addEventListener('click', async () => {
       return;
     }
 
-    const idx = contacts.findIndex(x => x.id === editId);
-    if (idx !== -1) contacts[idx] = { id: editId, nom, prenom, email, tel };
+    const idx = contacts.findIndex(x => String(x.id_partenaire) === editId);
+    if (idx !== -1) contacts[idx] = {
+      ...contacts[idx],
+      surnom,
+      email_partenaire: email,
+      telephone:        tel,
+      notes,
+    };
     showToast('Contact modifié ✓');
 
   } else {
-    // ── ADD ─────────────────────────────────────
+    /* ── ADD ────────────────────────────────── */
     let newId = null;
     try {
-      const res  = await fetch('contact.php', { method: 'POST', body: formData });
+      const res  = await fetch('../contact/contact.php', { method: 'POST', body: formData });
       const data = await res.json();
-      if (data.success === true) newId = data.id ?? nextId++;
+      if (data.success === true) newId = data.id;
     } catch (e) { newId = null; }
 
     if (newId === null) {
@@ -286,7 +278,13 @@ $('submitForm').addEventListener('click', async () => {
       return;
     }
 
-    contacts.push({ id: String(newId), nom, prenom, email, tel });
+    contacts.push({
+      id_partenaire:    newId,
+      surnom,
+      email_partenaire: email,
+      telephone:        tel,
+      notes,
+    });
     currentPage = totalPages();
     showToast('Contact ajouté ✓', 'var(--green)');
   }
@@ -297,7 +295,7 @@ $('submitForm').addEventListener('click', async () => {
 
 function markError(id) { $(id).classList.add('error'); }
 function clearErrors() {
-  ['fNom','fPrenom','fEmail','fTel'].forEach(id => $(id).classList.remove('error'));
+  ['fNom','fEmail','fTel'].forEach(id => $(id).classList.remove('error'));
 }
 
 /* ── OVERLAY UTILS ────────────────────────────── */
@@ -326,16 +324,29 @@ document.addEventListener('keydown', e => {
 });
 
 /* ── INIT ─────────────────────────────────────── */
-render();
+async function init() {
+  try {
+    const res  = await fetch('../contact/contact.php');
+    const data = await res.json();
+    if (data.success) {
+      contacts = data.contacts;
+    } else {
+      showToast('Erreur lors du chargement', '#E74C3C');
+    }
+  } catch (e) {
+    showToast('Impossible de charger les contacts', '#E74C3C');
+  }
 
-if (params.get('add') === '1') {
-  $('formTitle').textContent = 'Contact';
-  $('submitForm').textContent = 'Ajouter';
-  $('editId').value = '';
-  $('fNom').value = '';
-  $('fPrenom').value = '';
-  $('fEmail').value = '';
-  $('fTel').value = '';
-  clearErrors();
-  openOverlay('formOverlay');
+  render();
+
+  if (params.get('add') === '1') {
+    $('formTitle').textContent  = 'Contact';
+    $('submitForm').textContent = 'Ajouter';
+    $('editId').value = '';
+    $('fNom').value = $('fEmail').value = $('fTel').value = $('fNotes').value = '';
+    clearErrors();
+    openOverlay('formOverlay');
+  }
 }
+
+init();

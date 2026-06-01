@@ -147,57 +147,41 @@ function cancelEdit() {
 }
 
 function saveEdit() {
-  /*
-   * Envoyer les modifications au backend.
-   * Endpoint suggéré : POST /api/profile/update
-   * Body JSON :
-   * {
-   *   email:     inputEmail.value,
-   *   phone:     inputPhone.value,
-   *   birthDate: inputBirth.value,
-   *   city:      inputCity.value
-   * }
-   *
-   * Remplacer ce bloc par un vrai fetch() lors de l'intégration.
-   */
-
   const payload = {
-    email:     document.getElementById('inputEmail')?.value,
-    phone:     document.getElementById('inputPhone')?.value,
+    action:    'update_infos',
+    email:     document.getElementById('inputEmail')?.value.trim(),
+    phone:     document.getElementById('inputPhone')?.value.trim(),
     birthDate: document.getElementById('inputBirth')?.value,
-    city:      document.getElementById('inputCity')?.value,
+    city:      document.getElementById('inputCity')?.value.trim(),
   };
 
-  console.log('[Track SIDA] saveEdit payload:', payload);
+  // Envoi de la requête AJAX en JSON à update-profil.php
+  fetch('../profil/update-profil.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.success) {
+      // Si le serveur valide, on met à jour l'interface visuelle
+      if (payload.email)     updateFieldDisplay('valEmail', payload.email);
+      if (payload.phone)     updateFieldDisplay('valPhone', payload.phone || "+33 ????????");
+      if (payload.city)      updateFieldDisplay('valCity',  payload.city || "Inconnue");
+      if (payload.birthDate)  updateFieldDisplay('valBirth', formatDate(payload.birthDate) || "Non renseignée");
 
-  // Mettre à jour l'affichage avec les nouvelles valeurs
-  if (payload.email)     updateFieldDisplay('valEmail', payload.email);
-  if (payload.phone)     updateFieldDisplay('valPhone', payload.phone);
-  if (payload.birthDate) updateFieldDisplay('valBirth', formatDate(payload.birthDate));
-  if (payload.city)      updateFieldDisplay('valCity',  payload.city);
-
-  cancelEdit();
-  showToast('✓ Profil mis à jour', 'success');
-
-  /*
-   * Intégration backend :
-   *
-   * fetch('/api/profile/update', {
-   *   method: 'POST',
-   *   headers: { 'Content-Type': 'application/json', 'X-Session-Token': '[session:token]' },
-   *   body: JSON.stringify(payload)
-   * })
-   * .then(r => r.json())
-   * .then(data => {
-   *   if (data.success) {
-   *     cancelEdit();
-   *     showToast('✓ Profil mis à jour', 'success');
-   *   } else {
-   *     showToast('Erreur : ' + data.message, 'error');
-   *   }
-   * })
-   * .catch(() => showToast('Connexion impossible', 'error'));
-   */
+      cancelEdit();
+      showToast('✓ Profil mis à jour', 'success');
+    } else {
+      showToast('❌ ' + data.message, 'error');
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    showToast('Connexion au serveur impossible', 'error');
+  });
 }
 
 function updateFieldDisplay(id, value) {
@@ -337,13 +321,13 @@ function openLink(type) {
    * [server:baseUrl] sera remplacé par ex. "https://tracksida.fr"
    */
   const urls = {
-    cgu:     '/legal/cgu',       /* [server:cguUrl]     */
-    privacy: '/legal/privacy',   /* [server:privacyUrl] */
+    cgu:     '../docs/Tracksida-CGU.html',       /* [server:cguUrl]     */
+    privacy: '/docs/privacy.html',   /* [server:privacyUrl] */
     support: '/support',         /* [server:supportUrl] */
   };
   const url = urls[type] || '/';
   console.log('[Track SIDA] openLink:', url);
-  /* window.location.href = url; */
+  window.location.href = url;
   showToast('Ouverture de la page…');
 }
 
@@ -366,7 +350,7 @@ function confirmLogout() {
 function doLogout() {
   closeModal();
   showToast('Déconnexion en cours…');
-
+  window.location.href = "/auth/deconnexion.php";
   /*
    * Intégration backend :
    * POST /auth/logout
@@ -376,7 +360,7 @@ function doLogout() {
    *   .then(() => window.location.href = '/login');
    */
   console.log('[Track SIDA] doLogout — [session:userId] déconnecté');
-  setTimeout(() => { window.location.href = '/login'; }, 1000);
+  setTimeout(() => { window.location.href = '/auth/connexion.php'; }, 1000);
 }
 
 /* ──────────────────────────────────────────────────────────────
@@ -398,6 +382,7 @@ function confirmDelete() {
 function doDelete() {
   closeModal();
   showToast('Suppression du compte en cours…', 'error');
+  window.location.href = "/auth/suppression.php";
 
   /*
    * Intégration backend :
@@ -473,16 +458,16 @@ function showToast(message, type = '') {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-
   const form = document.querySelector("#changeMdp form");
+  if (!form) return;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const newPassword = document.getElementById("newPassword").value;
+    const newPassword = document.getElementById("mdpInput").value;
 
     try {
-      const response = await fetch("changeProfil.php", {
+      const response = await fetch("../profil/update-profil.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -493,15 +478,19 @@ document.addEventListener("DOMContentLoaded", () => {
         })
       });
 
-      const result = await response.text();
-      console.log("Réponse serveur :", result);
-
-      // fermer modal si succès
-      document.getElementById("changeMdp").classList.add("hidden");
+      const result = await response.json(); // On attend du JSON désormais
+      
+      if (result.success) {
+        showToast('✓ ' + result.message, 'success');
+        document.getElementById("changeMdp").classList.add("hidden");
+        form.reset(); // Vide le champ input
+      } else {
+        showToast('❌ ' + result.message, 'error');
+      }
 
     } catch (err) {
       console.error("Erreur requête :", err);
+      showToast('Erreur lors du changement de mot de passe', 'error');
     }
   });
-
 });

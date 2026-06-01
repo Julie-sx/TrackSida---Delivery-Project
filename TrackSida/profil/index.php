@@ -3,6 +3,14 @@ require 'data-profil.php' ;
 global $userPseudo;
 global $userEmail;
 global $userDateNaissance;
+global $userPartenaires;
+global $userDeclarations;
+global $userDi;
+global $initial;
+global $userType;
+global $userTime;
+global $userVille;
+global $userTel;
 
 ?>
 
@@ -59,17 +67,17 @@ global $userDateNaissance;
     <div class="hero-card" data-anim="0">
       <div class="avatar-ring">
         <div class="avatar" id="avatarCircle">
-          <span id="avatarInitials">[session:initials]</span>
+          <span id="avatarInitials"><?= htmlspecialchars($initial) ?></span>
         </div>
         <div class="avatar-status" id="avatarStatus"></div>
       </div>
       <div class="hero-info">
         <h1 class="hero-name" id="heroName"><?= htmlspecialchars($userPseudo) ?></h1>
         <div class="hero-meta">
-          <span class="hero-handle" id="heroHandle">@[session:username]</span>
-          <span class="hero-badge" id="heroBadge">[session:accountType]</span>
+          <span class="hero-handle" id="heroHandle">@<?= htmlspecialchars($userPseudo) ?></span>
+          <span class="hero-badge" id="heroBadge"><?= htmlspecialchars($userType) ?></span>
         </div>
-        <p class="hero-since">Membre depuis <span id="heroSince">[session:memberSince]</span></p>
+        <p class="hero-since">Membre depuis <span id="heroSince"><?=  htmlspecialchars($userTime) ?> Jours</span></p>
       </div>
       <button class="avatar-edit-btn" id="avatarEditBtn" onclick="changeAvatar()" aria-label="Changer l'avatar">
         <svg width="14" height="14" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
@@ -79,18 +87,18 @@ global $userDateNaissance;
     <!-- STATS ROW -->
     <div class="stats-row" data-anim="1">
       <div class="stat-card">
-        <span class="stat-value" id="statNotifs">[session:notifiedCount]</span>
-        <span class="stat-label">Partenaires<br>notifiés</span>
+        <span class="stat-value" id="statNotifs"><?= htmlspecialchars($userPartenaires) ?></span>
+        <span class="stat-label">Partenaires</span>
       </div>
       <div class="stat-divider"></div>
       <div class="stat-card">
-        <span class="stat-value" id="statTests">[session:testsCount]</span>
+        <span class="stat-value" id="statTests"><?= htmlspecialchars($userDeclarations) ?></span>
         <span class="stat-label">Tests<br>enregistrés</span>
       </div>
       <div class="stat-divider"></div>
       <div class="stat-card">
-        <span class="stat-value" id="statDays">[session:activeDays]</span>
-        <span class="stat-label">Jours<br>d'activité</span>
+        <span class="stat-value" id="statDays"><?= htmlspecialchars($userDi) ?></span>
+        <span class="stat-label">Inscription</span>
       </div>
     </div>
 
@@ -118,7 +126,7 @@ global $userDateNaissance;
             <svg width="15" height="15" fill="none" stroke="#8585A8" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.63 19 19.5 19.5 0 0 1 5 12.37 19.79 19.79 0 0 1 3.08 4.2 2 2 0 0 1 5.05 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L9.91 9.91a16 16 0 0 0 6.16 6.16l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             Téléphone
           </div>
-          <div class="info-value" id="valPhone">[session:phone]</div>
+          <div class="info-value" id="valPhone"><?= htmlspecialchars($userTel) ?></div>
           <input class="info-input hidden" id="inputPhone" type="tel" placeholder="[session:phone]" />
         </div>
 
@@ -130,7 +138,7 @@ global $userDateNaissance;
             Date de naissance
           </div>
           <div class="info-value" id="valBirth"><?= htmlspecialchars($userDateNaissance) ?></div>
-          <input class="info-input hidden" id="inputBirth" type="date" />
+          <input class="info-input hidden" id="inputBirth" type="date" value="<?= htmlspecialchars($userInfos[0]['date_naissance'] ?? '') ?>" />
         </div>
 
         <div class="info-separator"></div>
@@ -140,7 +148,7 @@ global $userDateNaissance;
             <svg width="15" height="15" fill="none" stroke="#8585A8" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             Ville
           </div>
-          <div class="info-value" id="valCity">[session:city]</div>
+          <div class="info-value" id="valCity"><?= htmlspecialchars($userVille) ?></div>
           <input class="info-input hidden" id="inputCity" type="text" placeholder="[session:city]" />
         </div>
 
@@ -152,69 +160,6 @@ global $userDateNaissance;
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         Changer le mot de passe
       </button>
-    </div>
-
-    <!-- SECTION : PRÉFÉRENCES -->
-    <div class="section" data-anim="4">
-      <div class="section-title">
-        <svg width="16" height="16" fill="none" stroke="#7B7FD4" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M20 12h2M2 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg>
-        Préférences
-      </div>
-      <div class="info-block">
-
-        <div class="info-row toggle-row">
-          <div class="toggle-info">
-            <div class="info-label-standalone">Notifications push</div>
-            <div class="toggle-desc">Alertes de partenaires &amp; rappels de test</div>
-          </div>
-          <label class="toggle-switch">
-            <input type="checkbox" id="toggleNotifs" onchange="savePref('notifications', this.checked)" />
-            <span class="toggle-track"><span class="toggle-thumb"></span></span>
-          </label>
-        </div>
-
-        <div class="info-separator"></div>
-
-        <div class="info-row toggle-row">
-          <div class="toggle-info">
-            <div class="info-label-standalone">Mode anonyme</div>
-            <div class="toggle-desc">Cache ton identité dans les notifications</div>
-          </div>
-          <label class="toggle-switch">
-            <input type="checkbox" id="toggleAnon" onchange="savePref('anonymous', this.checked)" />
-            <span class="toggle-track"><span class="toggle-thumb"></span></span>
-          </label>
-        </div>
-
-        <div class="info-separator"></div>
-
-        <div class="info-row toggle-row">
-          <div class="toggle-info">
-            <div class="info-label-standalone">Rappels de test</div>
-            <div class="toggle-desc">Rappel tous les [session:testReminderInterval]</div>
-          </div>
-          <label class="toggle-switch">
-            <input type="checkbox" id="toggleReminder" onchange="savePref('reminders', this.checked)" />
-            <span class="toggle-track"><span class="toggle-thumb"></span></span>
-          </label>
-        </div>
-
-        <div class="info-separator"></div>
-
-        <div class="info-row">
-          <div class="info-label">
-            <svg width="15" height="15" fill="none" stroke="#8585A8" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/></svg>
-            Langue
-          </div>
-          <select class="info-select" id="langSelect" onchange="savePref('language', this.value)">
-            <option value="fr">Français</option>
-            <option value="en">English</option>
-            <option value="es">Español</option>
-            <option value="ar">العربية</option>
-          </select>
-        </div>
-
-      </div>
     </div>
 
     <!-- SECTION : À PROPOS -->
@@ -247,7 +192,7 @@ global $userDateNaissance;
         <div class="info-separator"></div>
 
         <div class="info-row">
-          <div class="info-label-standalone muted-sm">Serveur : [server:region] · Build [server:buildId]</div>
+          <div class="info-label-standalone muted-sm">Serveur : France · Build R-00158-a789 </div>
         </div>
 
       </div>

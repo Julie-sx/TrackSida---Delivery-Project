@@ -55,16 +55,16 @@
         <input type="text" id="fNom" placeholder="Dupont" />
       </div>
       <div class="form-group">
-        <label for="fPrenom">Prénom <span class="req">*</span></label>
-        <input type="text" id="fPrenom" placeholder="Marie" />
-      </div>
-      <div class="form-group">
         <label for="fEmail">Email <span class="req-either">*</span></label>
         <input type="email" id="fEmail" placeholder="marie@email.com" />
       </div>
       <div class="form-group">
         <label for="fTel">Téléphone <span class="req-either">*</span></label>
         <input type="tel" id="fTel" placeholder="06 12 34 56 78" />
+      </div>
+      <div class="form-group">
+        <label for="fNotes">Notes</label>
+        <textarea id="fNotes" placeholder="Infos complémentaires..."></textarea>
       </div>
 
       <p class="form-hint">* champ obligatoire &nbsp;·&nbsp; <span class="req-either">*</span> email ou téléphone obligatoire</p>

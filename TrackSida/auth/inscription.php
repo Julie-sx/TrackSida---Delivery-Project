@@ -11,36 +11,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = isset($_POST['email']) ? safeInput($_POST['email']) : '';
     $password = isset($_POST['password']) ? safeInput($_POST['password']) : '';
     $password_confirm = isset($_POST['password_confirm']) ? safeInput($_POST['password_confirm']) : '';
+    $ville = isset($_POST['ville']) ? safeInput($_POST['ville']) : '';
+    $telephone = isset($_POST['telephone']) ? safeInput($_POST['telephone']) : '';
+    $dateN = isset($_POST['date_naissance']) ? safeInput($_POST['date_naissance']) : '';
+
     
     $cgu = isset($_POST['cgu']) ? 1 : 0;
-    echo("verif data set...");
     if (empty($prenom) || empty($nom) || empty($gender) || empty($email) || empty($password)) {
         header('Location: index.php?fail=err');
         exit;
     }
-    echo("f1...");
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         header('Location: index.php?fail=invalid_email');
         exit;
     }
-    echo("f2...");
+
     if (strlen($password) < 8) {
         header('Location: index.php?fail=pwd_too_short');
         exit;
     }
-    echo("f3...");
+
     if ($password !== $password_confirm) {
         header('Location: index.php?fail=pwd_mismatch');
         exit;
     }
-    echo("f4...");
     if ($cgu !== 1) {
         header('Location: index.php?fail=cgu_required');
         exit;
     }
-    echo("f5...");
     if ($_POST['password']!=$password){
-        header('Location: index.php?fail=err');
+        header('Location: index.php?fail=pass_wr_err');
         exit;
     }
     echo("f6...");
@@ -50,17 +50,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $bdd_findUSer = selectData("utilisateurs",["id_utilisateur"],["email"=>$email]);
 
     if (!empty($bdd_findUSer)) {
-        header('Location: index.php?fail=err');
+        header('Location: index.php?fail=user_already');
         exit;
     }
+    
+    $pseudo_genere = $prenom . " " . $nom;
+    $bdd_findPseudo = selectData("utilisateurs", ["id_utilisateur"], ["pseudo" => $pseudo_genere]);
 
-    //ajout bdd
+    if (!empty($bdd_findPseudo)) {
+        header('Location: index.php?fail=pseudo_exists');
+        exit;
+    }
 
     $data_array=[
     "pseudo"=>$prenom." ".$nom,
     "email"=>$email,
     "genre"=>$gender,
-    "mot_de_passe"=>$password
+    "mot_de_passe"=>$password,
+    "ville"=>$ville,
+    "telephone"=>$telephone,
+    "date_naissance"=>$dateN
     ];
 
     insertData("utilisateurs", $data_array);

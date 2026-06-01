@@ -11,16 +11,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $remember = isset($_POST['remember']) ? 1 : 0;
 
     if (empty($email) || empty($password)) {
-        header('Location: index.php?fail=err');
+        header('Location: /auth/?fail=err');
         exit;
     }
     if ($_POST['password']!=$password){
-        header('Location: index.php?fail=err');
+        header('Location: /auth/?fail=err');
         exit;
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        header('Location: index.php?fail=invalid_email');
+        header('Location: /auth/?fail=invalid_email');
         exit;
     }
 
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $bdd_findUSer = selectData("utilisateurs",["mot_de_passe","id_utilisateur"],["email"=>$email]);
 
     if (empty($bdd_findUSer)) {
-    header('Location: index.php?fail=invalid_password');
+    header('Location: /auth/?fail=invalid_password');
     exit;
     }
 
@@ -40,16 +40,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $rq_newConnexion = "UPDATE utilisateurs SET derniere_connexion = CURRENT_TIMESTAMP WHERE id_utilisateur = :id;";
         runSql($rq_newConnexion,["id"=>$_SESSION['id_user']]);
 
-        header('Location: index.php');
+        header('Location: /profil/');
         exit;
     }else{
-        header('Location: index.php?fail=invalid_password');
+        header('Location: /auth/?fail=invalid_password');
         exit;
     }
 
 
 } else {
-    header('Location: index.php');
+    header('Location: /auth/');
     exit;
 }
 ?>

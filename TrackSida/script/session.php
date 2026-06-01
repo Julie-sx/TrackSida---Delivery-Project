@@ -7,7 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if(!viewSession()){
-    header('Location:/auth/');
+    header('Location: /auth/');
 }
 
 function isAdmin(){
