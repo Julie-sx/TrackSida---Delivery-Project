@@ -1,4 +1,4 @@
-
+<?php require_once('../script/session.php'); ?>
 <head>
     <title>Header</title>
     <link rel="stylesheet" href="../css/style.css"/>
