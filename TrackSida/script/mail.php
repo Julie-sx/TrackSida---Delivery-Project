@@ -10,7 +10,7 @@ use PHPMailer\PHPMailer\Exception;
 /**
  * Fonction d'envoi d'email anonyme via le SMTP sécurisé d'OVH
  */
-function sendTracksidaAlert($toEmail) {
+function sendTracksidaAlert(string $toEmail) {
     $mail = new PHPMailer(true);
 
     try {
