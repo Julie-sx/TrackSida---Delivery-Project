@@ -57,7 +57,7 @@ try {
                 'id_partenaire' => $id_partenaire,
                 'token_unique' => $token
             ]);
-            $partenaire_mail=selectSQL("SELECT `email_partenaire` FROM `partenaires` WHERE ".$id_partenaire.";");
+            $partenaire_mail=selectSQL("SELECT `email_partenaire` FROM `partenaires` WHERE id_partenaire =".$id_partenaire.";");
             if(!empty($partenaire_mail)){
                 $mail=$partenaire_mail[0]["email_partenaire"];
                 sendTracksidaAlert($mail);
