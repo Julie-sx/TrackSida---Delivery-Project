@@ -63,10 +63,6 @@
         <button onclick="window.location.href='/alerte'" class="mobile-link">
             Sid'Alerte
         </button>
-
-        <button onclick="window.location.href='/notifications'" class="mobile-link">
-            Notifications
-        </button>
     </div>
 
 </div>
