@@ -1,3 +1,5 @@
+<?php require_once('script/session.php');?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
